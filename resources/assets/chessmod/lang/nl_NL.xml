@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties version="1.0">
+	<comment>English (en_US) Localization File</comment>
+
+	<entry key="item.Piece Mover.blackPieceMover.name">Zwarte Stuk Beweger</entry>
+	<entry key="item.Piece Mover.whitePieceMover.name">Witte Stuk Beweger</entry>
+	<entry key="item.Piece Mover.chessBoardGenerator.name">Schaakbord Generator</entry>
+	<entry key="item.Piece Mover.chessBoardColumn.name">Schaakbord Kolom</entry>
+	<entry key="item.Piece Mover.chessAI.name">KI Injector</entry>
+	
+	<entry key="entity.Minemaarten_Chess Mod.Rook.name">Toren</entry>
+	<entry key="entity.Minemaarten_Chess Mod.King.name">Koning</entry>
+	<entry key="entity.Minemaarten_Chess Mod.Pawn.name">Pion</entry>
+	<entry key="entity.Minemaarten_Chess Mod.Knight.name">Paard</entry>
+	<entry key="entity.Minemaarten_Chess Mod.Queen.name">Dame</entry>
+	<entry key="entity.Minemaarten_Chess Mod.Bishop.name">Loper</entry>
+	
+	<entry key="tooltip.selectedWhitePiece">Witte %s van %s geselecteerd.</entry>
+	<entry key="tooltip.selectedBlackPiece">Zwarte %s van %s geselecteerd.</entry>
+	<entry key="tooltip.noSelectedPiece">-Geen stuk geselecteerd-</entry>
+	<entry key="tooltip.aiInjector">Rechts klik op een stuk van een bepaalde kleur om dit kleur team kunstmatige intelligentie te geven.</entry>
+
+	<entry key="message.error.targetOccupied">[MineChess] Je kan hier geen schaakbord genereren: Er staat al een schaakbord op deze locatie.</entry>
+	<entry key="message.error.computerPiece">[MineChess] Dit stuk wordt bestuurd door de computer!</entry>
+	<entry key="message.error.notYourPiece">[MineChess] Dit is niet jouw stuk!</entry>
+	<entry key="message.error.pieceCaptured">[MineChess] Het geselecteerde stuk is al geslagen!</entry>
+	<entry key="message.error.aiPuzzle">[MineChess] Je kan geen kunstmatige intelligentie injecteren wanneer je tegen een puzzel speelt!</entry>
+	<entry key="message.error.alreadyAI">[MineChess] Dit team is al een computer!</entry>
+	<entry key="message.error.noPieceMover">[MineChess] Je hebt een Stuk Beweger nodig om stukken te kunnen bewegen!</entry>
+	<entry key="message.error.kingInCheck">[MineChess] Deze beweging is illegaal: Je koning staat schaak!</entry>
+	<entry key="message.error.kingCheckCastling">[MineChess] Je kan hier niet rokeren: Je koning zou over vakjes moeten bewegen die schaak staan!</entry>
+	<entry key="message.error.blacksTurn">[MineChess] Het is zwart zijn beurt!</entry>
+	<entry key="message.error.whitesTurn">[MineChess] Het is wit zijn beurt!</entry>
+	<entry key="message.error.ownPieceInWay">[MineChess] Je kan hier niet naartoe bewegen: Je eigen stuk staat hier al.</entry>
+	<entry key="message.error.movementRuleBlocks">[MineChess] Je kan hier niet naartoe bewegen: Er staan stukken in de weg of het mag niet wegens bewegingsregels!</entry>
+	
+	<entry key="message.error.bugReport.aiWrongMove">[Minechess KI] De KI heeft een beweging opgegeven die niet mag! Daarom is heeft het computerteam haar KI verloren (en kan bestuurd worden door een speler)!</entry>
+	<entry key="message.error.bugReport.capturedKing">[MineChess]Dit is een fout in de code! De koning kan nooit geslagen worden! Graag de situatie aan MineMaarten reportern, die je kan vinden op minecraftforum.net . Alvast bedankt!</entry>
+	
+	<entry key="message.player.youSurrenderWhiteWon">[MineChess] Je hebt opgegeven! Wit heeft gewonnen!</entry>
+    <entry key="message.player.youSurrenderBlackWon">[MineChess] Je hebt opgegeven! Zwart heeft gewonnen!</entry>
+    <entry key="message.player.confirmSurrender">[MineChess] Weet je zeker dat je wilt opgeven? Shift-Rechtsklik nog een keer om te bevestigen.</entry>
+	<entry key="message.player.selectPiece">[MineChess] %s geselecteerd.</entry>
+	<entry key="message.player.transformWhiteAI">[MineChess] De witte stukken zijn getransformeerd in computers.</entry>
+	<entry key="message.player.transformBlackAI">[MineChess] De zwarte stukken zijn getransformeerd in computers.</entry>
+	<entry key="message.player.movePiece">[MineChess] %s naar %s.</entry>
+	<entry key="message.broadcast.whiteSurrender">[MineChess] Wit heeft opgegeven!</entry>
+	<entry key="message.broadcast.blackSurrender">[MineChess] Zwart heeft opgegeven!</entry>
+	<entry key="message.broadcast.moveBlackPiece">[MineChess] Zwart heeft een %s naar %s bewogen.</entry>
+	<entry key="message.broadcast.moveWhitePiece">[MineChess] Wit heeft een %s naar %s bewogen.</entry>
+	<entry key="message.broadcast.stalemate">[MineChess] PATSTELLING!</entry>
+	<entry key="message.broadcast.checkmate">[MineChess] SCHAAKMAT!</entry>
+	<entry key="message.broadcast.check">[MineChess] SCHAAK!</entry>
+	<entry key="message.broadcast.puzzleObjectiveBlack">[Schaakpuzzel] Doel: Zet zwart in %s beweging(en) schaakmat.</entry>
+	<entry key="message.broadcast.puzzleObjectiveWhite">[Schaakpuzzel] Doel: Zet wit in %s beweging(en) schaakmat.</entry>
+	
+	<entry key="message.ai.preTurn.thinking">[Chess KI] Hmm, eens even kijken...</entry>
+	<entry key="message.ai.preTurn.tough">[Chess KI] Ik zit in een benarde positie hier...</entry>
+	<entry key="message.ai.preTurn.goodMove">[Chess KI] Goed gedaan! Eens zien wat ik kan doen...</entry>
+	<entry key="message.ai.postTurn.yourTurn">[Chess KI] Ga je gang, het is nu jouw beurt.</entry>
+	<entry key="message.ai.postTurn.quickMove">[Chess KI] Ik hoefde niet lang over die beweging na te denken!</entry>
+	<entry key="message.ai.postTurn.slowMove">[Chess KI] Hier moest ik lang over nadenken. Je maakt het moeilijk voor me!</entry>
+	<entry key="message.ai.postTurn.aiGoodMove">[Chess KI] Haha, die is voor jou!</entry>
+	<entry key="message.ai.postTurn.advantage">[Chess KI] Ik ben aan het winnen!</entry>
+</properties>
