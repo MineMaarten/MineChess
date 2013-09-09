@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties version="1.0">
+<comment>Spanish (es_ES) Localization File</comment>
+
+<entry key="item.Piece Mover.blackPieceMover.name">Movedor de Piezas Negras</entry>
+<entry key="item.Piece Mover.whitePieceMover.name">Movedor de Piezas Blancas</entry>
+<entry key="item.Piece Mover.chessBoardGenerator.name">Generador de Tablero de Ajedrez</entry>
+<entry key="item.Piece Mover.chessBoardColumn.name">Columna del Tablero de Ajedrez</entry>
+<entry key="item.Piece Mover.chessAI.name">Inyector IA</entry>
+
+<entry key="entity.Minemaarten_Chess Mod.Rook.name">Torre</entry>
+<entry key="entity.Minemaarten_Chess Mod.King.name">Rey</entry>
+<entry key="entity.Minemaarten_Chess Mod.Pawn.name">Peón</entry>
+<entry key="entity.Minemaarten_Chess Mod.Knight.name">Caballo</entry>
+<entry key="entity.Minemaarten_Chess Mod.Queen.name">Dama</entry>
+<entry key="entity.Minemaarten_Chess Mod.Bishop.name">Alfil</entry>
+
+<comment>Advanced text replacements. You can use @, #, $, ^, &, *</comment>
+<entry key="entity.Minemaarten_Chess Mod.Rook.replacement.@">o</entry>
+<entry key="entity.Minemaarten_Chess Mod.King.replacement.@">o</entry>
+<entry key="entity.Minemaarten_Chess Mod.Pawn.replacement.@">o</entry>
+<entry key="entity.Minemaarten_Chess Mod.Knight.replacement.@">a</entry>
+<entry key="entity.Minemaarten_Chess Mod.Queen.replacement.@">a</entry>
+<entry key="entity.Minemaarten_Chess Mod.Bishop.replacement.@">o</entry>
+
+<entry key="entity.Minemaarten_Chess Mod.Rook.replacement.#">el</entry>
+<entry key="entity.Minemaarten_Chess Mod.King.replacement.#">el</entry>
+<entry key="entity.Minemaarten_Chess Mod.Pawn.replacement.#">el</entry>
+<entry key="entity.Minemaarten_Chess Mod.Knight.replacement.#">la</entry>
+<entry key="entity.Minemaarten_Chess Mod.Queen.replacement.#">la</entry>
+<entry key="entity.Minemaarten_Chess Mod.Bishop.replacement.#">el</entry>
+
+<entry key="entity.Minemaarten_Chess Mod.Rook.replacement.$">un</entry>
+<entry key="entity.Minemaarten_Chess Mod.King.replacement.$">un</entry>
+<entry key="entity.Minemaarten_Chess Mod.Pawn.replacement.$">un</entry>
+<entry key="entity.Minemaarten_Chess Mod.Knight.replacement.$">una</entry>
+<entry key="entity.Minemaarten_Chess Mod.Queen.replacement.$">una</entry>
+<entry key="entity.Minemaarten_Chess Mod.Bishop.replacement.$">un</entry>
+
+<entry key="tooltip.selectedWhitePiece">Seleccionad@ # %s Blanc@ desde %s.</entry>
+<entry key="tooltip.selectedBlackPiece">Seleccionad@ # %s Negr@ desde %s.</entry>
+<entry key="tooltip.noSelectedPiece">-Ninguna Pieza Seleccionada-</entry>
+<entry key="tooltip.aiInjector">Click derecho sobre una pieza de ajedrez para convertir ese color en un equipo controlado por la IA.</entry>
+
+<entry key="message.error.targetOccupied">[MineChess] No se puede generar un tablero de ajedrez aquí: Ya hay piezas en la ubicación deseada.</entry>
+<entry key="message.error.computerPiece">[MineChess] ¡Esta pieza está controlada por el ordenador!</entry>
+<entry key="message.error.notYourPiece">[MineChess] ¡Esta no es tu pieza!</entry>
+<entry key="message.error.pieceCaptured">[MineChess] ¡La pieza seleccionada ha sido capturada!</entry>
+<entry key="message.error.aiPuzzle">[MineChess] ¡No puedes dar piezas a la IA cuando están luchando en un Puzzle de Ajedrez!</entry>
+<entry key="message.error.alreadyAI">[MineChess] ¡Este lado ya está controlado por la IA!</entry>
+<entry key="message.error.noPieceMover">[MineChess] ¡Necesitas un Movedor de piezas para poder mover piezas!</entry>
+<entry key="message.error.kingInCheck">[MineChess] Este movimiento no es válido. ¡Tu Rey está en Jaque!</entry>
+<entry key="message.error.kingCheckCastling">[MineChess] No puedes enrocarte aquí. ¡El Rey tendrá que moverse sobre casillas en Jaque!</entry>
+<entry key="message.error.blacksTurn">[MineChess] ¡Es el turno de las negras!</entry>
+<entry key="message.error.whitesTurn">[MineChess] ¡Es el turno de las blancas!</entry>
+<entry key="message.error.ownPieceInWay">[MineChess] No puedes mover hasta aquí. Tu propia pieza se encuentra ahí.</entry>
+<entry key="message.error.movementRuleBlocks">[MineChess] No puedes mover aquí. ¡Una pieza se encuentra en el medio o una regla de movimiento lo impide!</entry>
+
+<entry key="message.error.bugReport.aiWrongMove">[Minechess AI] La IA propuso un movimiento no válido. ¡Todas las piezas del ordenador han perdido su IA!</entry>
+<entry key="message.error.bugReport.capturedKing">[MineChess]¡Esto es un error! ¡El Rey nunca puede ser capturado! Por favor informe de la situación a MineMaarten que se encuentra en minecraftforum.net . Gracias de antemano.</entry>
+
+<entry key="message.player.youSurrenderWhiteWon">[MineChess] ¡Te has rendido! ¡Blancas ganan!</entry>
+<entry key="message.player.youSurrenderBlackWon">[MineChess] ¡Te has rendido! Negras ganan!</entry>
+<entry key="message.player.confirmSurrender">[MineChess] ¿Estás seguro que te quieres rendir? Shift y Click derecho otra vez para confirmar.</entry>
+<entry key="message.player.selectPiece">[MineChess] Seleccionad@ # %s.</entry>
+<entry key="message.player.transformWhiteAI">[MineChess] Transformadas las piezas blancas en IA.</entry>
+<entry key="message.player.transformBlackAI">[MineChess] Transformadas las piezas negras en IA.</entry>
+<entry key="message.player.movePiece">[MineChess] Moviendo %s a %s.</entry>
+<entry key="message.broadcast.whiteSurrender">[MineChess] ¡Blancas se rinden!</entry>
+<entry key="message.broadcast.blackSurrender">[MineChess] ¡Negras se rinden!</entry>
+<entry key="message.broadcast.moveBlackPiece">[MineChess] Negras mueven $ %s a %s.</entry>
+<entry key="message.broadcast.moveWhitePiece">[MineChess] Blancas mueven $ %s a %s.</entry>
+<entry key="message.broadcast.stalemate">[MineChess] ¡TABLAS!</entry>
+<entry key="message.broadcast.checkmate">[MineChess] ¡JAQUE MATE!</entry>
+<entry key="message.broadcast.check">[MineChess] ¡JAQUE!</entry>
+<entry key="message.broadcast.puzzleObjectiveBlack">[Puzzle de Ajedrez] Objetivo: Ganan Negras en %s movimiento(s).</entry>
+<entry key="message.broadcast.puzzleObjectiveWhite">[Puzzle de Ajedrez] Objetivo: Ganan Blancas en %s movimiento(s).</entry>
+
+<entry key="message.ai.preTurn.thinking">[IA Ajedrez] Mmm, veamos...</entry>
+<entry key="message.ai.preTurn.tough">[IA Ajedrez] Aquí estoy en una posición difícil...</entry>
+<entry key="message.ai.preTurn.goodMove">[IA Ajedrez] ¡Buen movimiento! Veamos que puedo hacer...</entry>
+<entry key="message.ai.postTurn.yourTurn">[IA Ajedrez] Adelante. Ahora es tu turno.</entry>
+<entry key="message.ai.postTurn.quickMove">[IA Ajedrez] ¡No he tardado mucho tiempo en decidir que hacer!</entry>
+<entry key="message.ai.postTurn.slowMove">[IA Ajedrez] ¡Eso fue difícil de preveer! ¡Me lo estás poniendo realmente complicado!</entry>
+<entry key="message.ai.postTurn.aiGoodMove">[IA Ajedrez] ¡Jaja, toma eso!</entry>
+<entry key="message.ai.postTurn.advantage">[IA Ajedrez] ¡La victoria es mía!</entry>
+</properties>
