@@ -1,0 +1,10 @@
+-Copy the English localization file.
+-Replace the English translation by your own.
+-When your language has different prefixes for each of the chesspieces,
+you can solve this with a build in system to handle this. For instance if you look at the Spanish
+localization (es_ES.xml), there is a line:
+
+<entry key="entity.Minemaarten_Chess Mod.Rook.replacement.#">la</entry>
+
+This line means that in every sentence where there is a Rook mentioned, everywhere where a '#' appears,
+this will be replaced by 'la'. You can use the following characters: '@', '#', '$', '^', '&' and '*'.
