@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties version="1.0">
-<comment>Spanish (es_ES) Localization File</comment>
+<comment>Spanish (es_ES) Localization File, translation by DancingPeral</comment>
 
 <entry key="item.Piece Mover.blackPieceMover.name">Movedor de Piezas Negras</entry>
 <entry key="item.Piece Mover.whitePieceMover.name">Movedor de Piezas Blancas</entry>
@@ -16,25 +16,24 @@
 <entry key="entity.Minemaarten_Chess Mod.Queen.name">Dama</entry>
 <entry key="entity.Minemaarten_Chess Mod.Bishop.name">Alfil</entry>
 
-<comment>Advanced text replacements. You can use @, #, $, ^, &, *</comment>
-<entry key="entity.Minemaarten_Chess Mod.Rook.replacement.@">o</entry>
+<entry key="entity.Minemaarten_Chess Mod.Rook.replacement.@">a</entry>
 <entry key="entity.Minemaarten_Chess Mod.King.replacement.@">o</entry>
 <entry key="entity.Minemaarten_Chess Mod.Pawn.replacement.@">o</entry>
-<entry key="entity.Minemaarten_Chess Mod.Knight.replacement.@">a</entry>
+<entry key="entity.Minemaarten_Chess Mod.Knight.replacement.@">o</entry>
 <entry key="entity.Minemaarten_Chess Mod.Queen.replacement.@">a</entry>
 <entry key="entity.Minemaarten_Chess Mod.Bishop.replacement.@">o</entry>
 
-<entry key="entity.Minemaarten_Chess Mod.Rook.replacement.#">el</entry>
+<entry key="entity.Minemaarten_Chess Mod.Rook.replacement.#">la</entry>
 <entry key="entity.Minemaarten_Chess Mod.King.replacement.#">el</entry>
 <entry key="entity.Minemaarten_Chess Mod.Pawn.replacement.#">el</entry>
-<entry key="entity.Minemaarten_Chess Mod.Knight.replacement.#">la</entry>
+<entry key="entity.Minemaarten_Chess Mod.Knight.replacement.#">el</entry>
 <entry key="entity.Minemaarten_Chess Mod.Queen.replacement.#">la</entry>
 <entry key="entity.Minemaarten_Chess Mod.Bishop.replacement.#">el</entry>
 
-<entry key="entity.Minemaarten_Chess Mod.Rook.replacement.$">un</entry>
+<entry key="entity.Minemaarten_Chess Mod.Rook.replacement.$">una</entry>
 <entry key="entity.Minemaarten_Chess Mod.King.replacement.$">un</entry>
 <entry key="entity.Minemaarten_Chess Mod.Pawn.replacement.$">un</entry>
-<entry key="entity.Minemaarten_Chess Mod.Knight.replacement.$">una</entry>
+<entry key="entity.Minemaarten_Chess Mod.Knight.replacement.$">un</entry>
 <entry key="entity.Minemaarten_Chess Mod.Queen.replacement.$">una</entry>
 <entry key="entity.Minemaarten_Chess Mod.Bishop.replacement.$">un</entry>
 
