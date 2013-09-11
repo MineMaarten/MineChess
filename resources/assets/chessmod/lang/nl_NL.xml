@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties version="1.0">
-	<comment>English (en_US) Localization File</comment>
+	<comment>Dutch (nl_NL) Localization File</comment>
 
 	<entry key="item.Piece Mover.blackPieceMover.name">Zwarte Stuk Beweger</entry>
 	<entry key="item.Piece Mover.whitePieceMover.name">Witte Stuk Beweger</entry>
