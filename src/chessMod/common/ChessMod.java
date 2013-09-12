@@ -117,5 +117,6 @@ public class ChessMod{
         ServerCommandManager comManager = (ServerCommandManager)MinecraftServer.getServer().getCommandManager();
         comManager.registerCommand(new CommandAIDepth());
         comManager.registerCommand(new CommandKillPiece());
+        comManager.registerCommand(new CommandDraw());
     }
 }
