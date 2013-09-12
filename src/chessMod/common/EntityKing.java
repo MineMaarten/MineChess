@@ -1,6 +1,7 @@
 package chessMod.common;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -9,6 +10,7 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
@@ -16,6 +18,7 @@ import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ChestGenHooks;
 import chessMod.common.ai.AIMain;
+import chessMod.common.ai.ChessPosition;
 
 /**
  * MineChess
@@ -25,7 +28,8 @@ import chessMod.common.ai.AIMain;
  */
 
 public class EntityKing extends EntityBaseChessPiece{
-    private final List<EntityPlayer> playersInArea;
+    private final List<EntityPlayer> playersInArea = new ArrayList<EntityPlayer>();
+    public final List<ChessPosition> lastPositions = new ArrayList<ChessPosition>();
     private int listUpdateTicks = 0;
     private AIMain ai;
     public float lastPositionScore;
@@ -33,7 +37,6 @@ public class EntityKing extends EntityBaseChessPiece{
     public EntityKing(World par1World){
         super(par1World);
         listUpdateTicks = rand.nextInt(60);
-        playersInArea = new ArrayList<EntityPlayer>();
     }
 
     @Override
@@ -142,15 +145,75 @@ public class EntityKing extends EntityBaseChessPiece{
         super.setDead();
     }
 
+    /**
+     * Adds the current position, and returns true if the game is a draw (3x same position, last 50 positions no active move).
+     * @param messagePlayer when true, nearby players will be informed about when they can ask for a draw.
+     * @return
+     */
+    public boolean checkForDraw(boolean messagePlayer){
+        //Check for active movement (movements that can't be reproduced like pawn movement). When found, clear the movement list.
+        ChessPosition lastPos = null;
+        if(lastPositions.size() > 1) {
+            lastPos = lastPositions.get(lastPositions.size() - 1);
+            if(lastPos.hasActiveDifference(lastPositions.get(lastPositions.size() - 2))) {
+                lastPositions.clear();
+                lastPositions.add(lastPos);
+            }
+        }
+
+        if(lastPositions.size() >= 100) {
+            sendChatToNearbyPlayers(null, "message.broadcast.inactiveDraw", EnumChatFormatting.GOLD.toString(), "" + lastPositions.size());
+            return true;//50x no active move (a move being both the player and his opponent moved once).
+        }
+
+        if(lastPos != null) {
+            //Check for 3x same position.
+            int samePositionsFound = 0;
+            for(ChessPosition testPos : lastPositions) {
+                if(testPos.isSame(lastPos)) samePositionsFound++;
+            }
+            if(samePositionsFound >= 3) {
+                sendChatToNearbyPlayers(null, "message.broadcast.samePositionThrice", EnumChatFormatting.GOLD.toString(), "" + samePositionsFound);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public void writeEntityToNBT(NBTTagCompound tag){
         super.writeEntityToNBT(tag);
         tag.setFloat("lastScore", lastPositionScore);
+
+        NBTTagList tagList = new NBTTagList();
+        for(int i = 0; i < lastPositions.size(); i++) {
+            NBTTagCompound positionTag = new NBTTagCompound();
+            positionTag.setByte("turn", (byte)i);
+            lastPositions.get(i).writeToNBT(positionTag);
+            tagList.appendTag(positionTag);
+        }
+        tag.setTag("lastPositions", tagList);
     }
 
     @Override
     public void readEntityFromNBT(NBTTagCompound tag){
         super.readEntityFromNBT(tag);
         lastPositionScore = tag.getFloat("lastScore");
+
+        lastPositions.clear();
+        NBTTagList tagList = tag.getTagList("lastPositions");
+        lastPositions.addAll(Arrays.asList(new ChessPosition[tagList.tagCount()])); //reserve a fixed space, so we can fill in this list in sequence.
+
+        for(int i = 0; i < tagList.tagCount(); i++) {
+            NBTTagCompound positionTag = (NBTTagCompound)tagList.tagAt(i);
+            int turn = positionTag.getByte("turn");
+
+            if(turn >= 0 && turn < lastPositions.size()) {
+                ChessPosition position = new ChessPosition();
+                position.readFromNBT(positionTag);
+                lastPositions.set(turn, position);
+            }
+        }
     }
 }

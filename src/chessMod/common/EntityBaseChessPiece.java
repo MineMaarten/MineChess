@@ -16,6 +16,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import chessMod.common.ai.ChessMove;
+import chessMod.common.ai.ChessPosition;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 
@@ -332,6 +333,18 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                 ChessModUtils.spawnParticle("explode", posX, posY + rand.nextDouble() * 1.5D, posZ, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D);
             }
         }
+        List<EntityBaseChessPiece> pieces = getChessPieces(true);
+        EntityKing king = null;
+        for(EntityBaseChessPiece piece : pieces) {
+            if(piece instanceof EntityKing && piece.isBlack()) {//only the black king keeps track of the positions.
+                king = (EntityKing)piece;
+                break;
+            }
+        }
+        if(king != null) {
+            ChessPosition curPos = new ChessPosition(this);
+            king.lastPositions.add(curPos);
+        }
         int movesAvailable = isGameOver();
         if(movesAvailable == 0) {
             if(isKingInDanger(!isBlack(), false)) {
@@ -346,6 +359,10 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
             if(player != null) ChessModUtils.sendUnlocalizedMessage(player, "message.broadcast.check", EnumChatFormatting.YELLOW.toString());
             sendChatToNearbyPlayers(player, "message.broadcast.check", EnumChatFormatting.RED.toString());
         }
+        if(king != null) {
+            king.checkForDraw(true);
+        }
+
         switchTurns();
         handlePuzzles(player);
 

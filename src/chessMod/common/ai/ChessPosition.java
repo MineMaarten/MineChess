@@ -2,6 +2,7 @@ package chessMod.common.ai;
 
 import java.util.List;
 
+import net.minecraft.nbt.NBTTagCompound;
 import chessMod.common.EntityBaseChessPiece;
 import chessMod.common.EntityBishop;
 import chessMod.common.EntityKing;
@@ -136,5 +137,70 @@ public class ChessPosition{
             System.out.print("[" + board[i] + "] ");
             if(i % 10 == 9) System.out.println();
         }
+    }
+
+    public void writeToNBT(NBTTagCompound tag){
+        for(int i = 0; i < board.length; i++) {
+            tag.setInteger("tile" + i, board[i]);
+        }
+        tag.setBoolean("blackChecked", bBlackChecked);
+        tag.setBoolean("blackKingMoved", bBlackKingMoved);
+        tag.setBoolean("whiteChecked", bWhiteChecked);
+        tag.setBoolean("whiteKingMoved", bWhiteKingMoved);
+        tag.setByte("enPassantSquare", (byte)enPassantSquare);
+    }
+
+    public void readFromNBT(NBTTagCompound tag){
+        for(int i = 0; i < board.length; i++) {
+            board[i] = tag.getInteger("tile" + i);
+        }
+        bBlackChecked = tag.getBoolean("blackChecked");
+        bBlackKingMoved = tag.getBoolean("blackKingMoved");
+        bWhiteChecked = tag.getBoolean("whiteChecked");
+        bWhiteKingMoved = tag.getBoolean("whiteKingMoved");
+        enPassantSquare = tag.getByte("enPassantSquare");
+    }
+
+    /**
+     * Returns true if the pieces are at the same place as the comparison, and when the piece movement booleans are the same.
+     * @param compare
+     * @return
+     */
+    public boolean isSame(ChessPosition compare){
+        for(int i = 0; i < board.length; i++) {
+            if(board[i] != compare.board[i]) return false;
+        }
+        if(bBlackChecked != compare.bBlackChecked) return false;
+        if(bBlackKingMoved != compare.bBlackKingMoved) return false;
+        if(bWhiteChecked != compare.bWhiteChecked) return false;
+        if(bWhiteKingMoved != compare.bWhiteKingMoved) return false;
+        if(enPassantSquare != compare.enPassantSquare) return false;
+        return true;
+    }
+
+    /**
+     * Returns true when the given position has a difference in active pieces from this position (unreproducable moves, e.g. pawns moved)
+     * @param compare
+     * @return
+     */
+    public boolean hasActiveDifference(ChessPosition compare){
+        //check for pawn change and captures
+        int thisPieceCount = 0;
+        int comparePieceCount = 0;
+        for(int i = 0; i < board.length; i++) {
+            if(board[i] == 1 && compare.board[i] != 1) return true;
+            if(board[i] == -1 && compare.board[i] != -1) return true;
+            if(board[i] != 0) thisPieceCount++;
+            if(compare.board[i] != 0) comparePieceCount++;
+        }
+        if(thisPieceCount != comparePieceCount) return true;
+
+        //check for losing the ability to castle e.g.
+        if(bBlackChecked != compare.bBlackChecked) return true;
+        if(bBlackKingMoved != compare.bBlackKingMoved) return true;
+        if(bWhiteChecked != compare.bWhiteChecked) return true;
+        if(bWhiteKingMoved != compare.bWhiteKingMoved) return true;
+        if(enPassantSquare != compare.enPassantSquare) return true;
+        return false;
     }
 }
