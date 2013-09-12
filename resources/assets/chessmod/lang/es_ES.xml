@@ -55,7 +55,8 @@
 <entry key="message.error.whitesTurn">[MineChess] ¡Es el turno de las blancas!</entry>
 <entry key="message.error.ownPieceInWay">[MineChess] No puedes mover hasta aquí. Tu propia pieza se encuentra ahí.</entry>
 <entry key="message.error.movementRuleBlocks">[MineChess] No puedes mover aquí. ¡Una pieza se encuentra en el medio o una regla de movimiento lo impide!</entry>
-
+<entry key="message.error.noChessboardsNearby">[MineChess] There are no chessboards nearby to request a draw from!</entry>
+	
 <entry key="message.error.bugReport.aiWrongMove">[Minechess AI] La IA propuso un movimiento no válido. ¡Todas las piezas del ordenador han perdido su IA!</entry>
 <entry key="message.error.bugReport.capturedKing">[MineChess]¡Esto es un error! ¡El Rey nunca puede ser capturado! Por favor informe de la situación a MineMaarten que se encuentra en minecraftforum.net . Gracias de antemano.</entry>
 
@@ -76,6 +77,11 @@
 <entry key="message.broadcast.puzzleObjectiveBlack">[Puzzle de Ajedrez] Objetivo: Ganan Negras en %s movimiento(s).</entry>
 <entry key="message.broadcast.puzzleObjectiveWhite">[Puzzle de Ajedrez] Objetivo: Ganan Blancas en %s movimiento(s).</entry>
 
+<entry key="message.broadcast.inactiveDraw">[MineChess] There wasn't an active move for the last %s moves. You can request a draw by typing /draw.</entry>
+<entry key="message.broadcast.samePositionThrice">[MineChess] This position occured %s times now. You can request a draw by typing /draw.</entry>
+<entry key="message.broadcast.drawRequestAllowed">[MineChess] A draw was requested by %s. This is allowed, so it's a DRAW!</entry>
+<entry key="message.broadcast.drawRequestRejected">[MineChess] A draw was requested by %s. This request was rejected.</entry>
+    
 <entry key="message.ai.preTurn.thinking">[IA Ajedrez] Mmm, veamos...</entry>
 <entry key="message.ai.preTurn.tough">[IA Ajedrez] Aquí estoy en una posición difícil...</entry>
 <entry key="message.ai.preTurn.goodMove">[IA Ajedrez] ¡Buen movimiento! Veamos que puedo hacer...</entry>

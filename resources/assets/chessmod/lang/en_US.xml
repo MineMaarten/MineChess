@@ -34,6 +34,7 @@
 	<entry key="message.error.whitesTurn">[MineChess] It's white's turn!</entry>
 	<entry key="message.error.ownPieceInWay">[MineChess] You can't move to here. Your own piece is standing here.</entry>
 	<entry key="message.error.movementRuleBlocks">[MineChess] You can't move here. A piece is in between, or a movement rule is blocking this!</entry>
+	<entry key="message.error.noChessboardsNearby">[MineChess] There are no chessboards nearby to request a draw from!</entry>
 	
 	<entry key="message.error.bugReport.aiWrongMove">[Minechess AI] AI proposed a non valid move. All computer pieces have lost their AI!</entry>
 	<entry key="message.error.bugReport.capturedKing">[MineChess]This is a bug! The King never can be captured! Please report the situation back to MineMaarten, found at minecraftforum.net . Thanks in advance.</entry>
@@ -55,6 +56,11 @@
 	<entry key="message.broadcast.puzzleObjectiveBlack">[Chess Puzzle] Objective: Mate black in %s move(s).</entry>
 	<entry key="message.broadcast.puzzleObjectiveWhite">[Chess Puzzle] Objective: Mate white in %s move(s).</entry>
 	
+	<entry key="message.broadcast.inactiveDraw">[MineChess] There wasn't an active move for the last %s moves. You can request a draw by typing /draw.</entry>
+    <entry key="message.broadcast.samePositionThrice">[MineChess] This position occured %s times now. You can request a draw by typing /draw.</entry>
+	<entry key="message.broadcast.drawRequestAllowed">[MineChess] A draw was requested by %s. This is allowed, so it's a DRAW!</entry>
+    <entry key="message.broadcast.drawRequestRejected">[MineChess] A draw was requested by %s. This request was rejected.</entry>
+    
 	<entry key="message.ai.preTurn.thinking">[Chess AI] Hmm, let's see...</entry>
 	<entry key="message.ai.preTurn.tough">[Chess AI] I'm in a tough position here...</entry>
 	<entry key="message.ai.preTurn.goodMove">[Chess AI] Good move! Let's see what I can do...</entry>

@@ -34,6 +34,7 @@
 	<entry key="message.error.whitesTurn">[MineChess] Het is wit zijn beurt!</entry>
 	<entry key="message.error.ownPieceInWay">[MineChess] Je kan hier niet naartoe bewegen: Je eigen stuk staat hier al.</entry>
 	<entry key="message.error.movementRuleBlocks">[MineChess] Je kan hier niet naartoe bewegen: Er staan stukken in de weg of het mag niet wegens bewegingsregels!</entry>
+	<entry key="message.error.noChessboardsNearby">[MineChess] Er zijn geen schaakborden in de buurt waar je een remise kan aanvragen!</entry>
 	
 	<entry key="message.error.bugReport.aiWrongMove">[Minechess KI] De KI heeft een beweging opgegeven die niet mag! Daarom is heeft het computerteam haar KI verloren (en kan bestuurd worden door een speler)!</entry>
 	<entry key="message.error.bugReport.capturedKing">[MineChess]Dit is een fout in de code! De koning kan nooit geslagen worden! Graag de situatie aan MineMaarten reportern, die je kan vinden op minecraftforum.net . Alvast bedankt!</entry>
@@ -54,6 +55,12 @@
 	<entry key="message.broadcast.check">[MineChess] SCHAAK!</entry>
 	<entry key="message.broadcast.puzzleObjectiveBlack">[Schaakpuzzel] Doel: Zet zwart in %s beweging(en) schaakmat.</entry>
 	<entry key="message.broadcast.puzzleObjectiveWhite">[Schaakpuzzel] Doel: Zet wit in %s beweging(en) schaakmat.</entry>
+	
+	<entry key="message.broadcast.inactiveDraw">[MineChess] Er is de laatste %s bewegingen geen actieve beweging geweest. Je kan een remise vragen door /draw te typen.</entry>
+    <entry key="message.broadcast.samePositionThrice">[MineChess] Deze positie is nu %s keer voorbij gekomen. Je kan een remise vragen door /draw te typen.</entry>
+	<entry key="message.broadcast.drawRequestAllowed">[MineChess] Een remise is aangevraagd door %s. Dit is toegestaan en het is nu dus REMISE!</entry>
+    <entry key="message.broadcast.drawRequestRejected">[MineChess] Een remise is aangevraagd door %s. Deze aanvraag is afgewezen.</entry>
+    
 	
 	<entry key="message.ai.preTurn.thinking">[Chess KI] Hmm, eens even kijken...</entry>
 	<entry key="message.ai.preTurn.tough">[Chess KI] Ik zit in een benarde positie hier...</entry>
