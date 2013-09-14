@@ -13,7 +13,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -127,10 +126,10 @@ public class ItemPieceMover extends Item{
             if(entitySelected != null) {
                 list.add(LocalizationHandler.getStringFromUnlocalizedParts(entitySelected.isBlack() ? "tooltip.selectedBlackPiece" : "tooltip.selectedWhitePiece", EnumChatFormatting.GRAY.toString(), "entity." + EntityList.getEntityString(entitySelected) + ".name", entitySelected.getColumnName(entitySelected.targetX) + (entitySelected.targetZ + 1)));
             } else {
-                list.add(LanguageRegistry.instance().getStringLocalization("tooltip.noSelectedPiece"));
+                list.add(LocalizationHandler.getStringLocalization("tooltip.noSelectedPiece"));
             }
         } else if(iStack.getItemDamage() == 4) {
-            list.add(LanguageRegistry.instance().getStringLocalization("tooltip.aiInjector"));
+            list.add(LocalizationHandler.getStringLocalization("tooltip.aiInjector"));
         }
     }
 

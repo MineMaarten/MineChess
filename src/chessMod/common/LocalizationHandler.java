@@ -27,19 +27,27 @@ public class LocalizationHandler{
      * @return
      */
     public static String getStringFromUnlocalizedParts(String chatMessage, String... replacements){
-        chatMessage = LanguageRegistry.instance().getStringLocalization(chatMessage);
+        chatMessage = getStringLocalization(chatMessage);
         for(int i = 0; i < replacements.length; i++) {
             String replacement = replacements[i];
-            if(!LanguageRegistry.instance().getStringLocalization(replacement).equals("")) {
-                replacements[i] = LanguageRegistry.instance().getStringLocalization(replacement);
+            if(!getStringLocalization(replacement).equals("")) {
+                replacements[i] = getStringLocalization(replacement);
                 if(replacement.startsWith("entity.")) {
                     for(String replaceChar : REPLACE_CHARS)
-                        chatMessage = chatMessage.replace(replaceChar, LanguageRegistry.instance().getStringLocalization(replacement.replace("name", "replacement." + replaceChar)));
+                        chatMessage = chatMessage.replace(replaceChar, getStringLocalization(replacement.replace("name", "replacement." + replaceChar)));
                 }
             } else {
                 replacements[i] = replacement;
             }
         }
         return String.format("%s" + chatMessage, (Object[])replacements);
+    }
+
+    public static String getStringLocalization(String unlocalized){
+        if(LanguageRegistry.instance().getStringLocalization(unlocalized).equals("")) {
+            return LanguageRegistry.instance().getStringLocalization(unlocalized, "en_US");
+        } else {
+            return LanguageRegistry.instance().getStringLocalization(unlocalized);
+        }
     }
 }
