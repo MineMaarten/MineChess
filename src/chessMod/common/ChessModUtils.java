@@ -55,7 +55,7 @@ public class ChessModUtils{
             case 1:
                 // play a creepy sound. A maximum of 5 creepers spawn around the
                 // chessboard.
-                PacketDispatcher.sendPacketToAllPlayers(PacketHandlerChessMod.playSound(x, y, z, "ambient.cave.cave", 1.0F, 1.0F, true));
+                PacketDispatcher.sendPacketToAllAround(x, y, z, Constants.PACKET_UPDATE_DISTANCE, world.provider.dimensionId, PacketHandlerChessMod.playSound(x, y, z, "ambient.cave.cave", 1.0F, 1.0F, true));
                 int entityCount = 0;
                 boolean firstCreeper = true;
                 for(int i = 0; i < 50; i++) {

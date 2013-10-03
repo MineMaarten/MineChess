@@ -38,7 +38,7 @@ public class CommandDraw extends CommandBase{
     public void processCommand(ICommandSender icommandsender, String[] astring){
         ChunkCoordinates coords = icommandsender.getPlayerCoordinates();
         AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(coords.posX - 2, coords.posY - 2, coords.posZ - 2, coords.posX + 2, coords.posY + 2, coords.posZ);
-        List<EntityBaseChessPiece> pieces = icommandsender.func_130014_f_().getEntitiesWithinAABB(EntityBaseChessPiece.class, aabb);
+        List<EntityBaseChessPiece> pieces = icommandsender.getEntityWorld().getEntitiesWithinAABB(EntityBaseChessPiece.class, aabb);
         if(pieces.size() > 0) {
             pieces = pieces.get(0).getChessPieces(true);
             for(EntityBaseChessPiece piece : pieces) {

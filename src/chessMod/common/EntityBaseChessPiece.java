@@ -66,9 +66,9 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
     }
 
     @Override
-    protected void func_110147_ax(){
-        super.func_110147_ax();
-        func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(0.5D);
+    protected void applyEntityAttributes(){
+        super.applyEntityAttributes();
+        getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.5D);
     }
 
     public ResourceLocation getTexture(){
