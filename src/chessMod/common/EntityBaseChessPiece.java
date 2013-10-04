@@ -69,6 +69,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
     protected void applyEntityAttributes(){
         super.applyEntityAttributes();
         getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.5D);
+        getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(1.0D);
     }
 
     public ResourceLocation getTexture(){

@@ -28,7 +28,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
  */
 
 // TODO increase version
-@Mod(modid = "Minemaarten_Chess Mod", name = "MineChess", version = "1.3.2")
+@Mod(modid = "Minemaarten_Chess Mod", name = "MineChess", version = "1.3.3")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"chessMod"}, packetHandler = PacketHandlerChessMod.class)
 public class ChessMod{
 
