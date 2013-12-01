@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 
 import chessMod.common.ChessMod;
 import chessMod.common.ChessModUtils;
+import chessMod.common.EntityBaseChessPiece;
 import chessMod.common.ItemPieceMover;
 
 /**
@@ -23,7 +24,6 @@ import chessMod.common.ItemPieceMover;
 
 public class ChessModDrawBlockHighlightHandler{
     public static int pulse = 0;
-    public static int renderHeight = 0;
     private static boolean doInc = true;
     private static float pulseTransparency;
 
@@ -31,21 +31,20 @@ public class ChessModDrawBlockHighlightHandler{
     public void onDrawBlockHighlightEvent(DrawBlockHighlightEvent event){
         if(event.currentItem != null && ChessMod.configRenderMovement) {
             if(event.currentItem.getItem().itemID == ChessMod.itemPieceMover.itemID) {
-                ItemPieceMover pieceMover = (ItemPieceMover)event.currentItem.getItem();
                 if(event.currentItem.getItemDamage() < 2) {// piece mover
-                    if(pieceMover.entitySelected != null) {
+                    EntityBaseChessPiece entitySelected = ItemPieceMover.getEntitySelected(event.player.worldObj, event.currentItem);
+                    if(entitySelected != null) {
                         pulseTransparency = getPulseValue() * 0.75F / 3000f;
-                        // event.player.addChatMessage("Moves: ");
-                        for(int i = 0; i < pieceMover.renderPositions.size(); i++) {
+                        int renderHeight = ItemPieceMover.getRenderHeight(event.currentItem);
+                        for(int[] tile : ItemPieceMover.getRenderTiles(event.currentItem)) {
                             try {
-                                highlightTile(event.player, pieceMover.renderPositions.get(i)[0] + pieceMover.entitySelected.getXOffset(), renderHeight, pieceMover.renderPositions.get(i)[1] + pieceMover.entitySelected.getZOffset(), event.partialTicks);
+                                highlightTile(event.player, tile[0] + entitySelected.getXOffset(), renderHeight, tile[1] + entitySelected.getZOffset(), event.partialTicks);
                             } catch(Exception e) {
 
                             }
                         }
                     }
-                } else if(event.currentItem.getItemDamage() == 2) {// board
-                    // generator
+                } else if(event.currentItem.getItemDamage() == 2) {// board generator
                     pulseTransparency = getPulseValue() * 0.75F / 3000f;
                     int orientation = ChessModUtils.determineOrientation(event.player);
                     int startX = event.target.blockX;
