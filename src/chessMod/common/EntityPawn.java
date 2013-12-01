@@ -61,7 +61,7 @@ public class EntityPawn extends EntityBaseChessPiece{
     private boolean isEnemyAt(int x, int z){
         List<EntityBaseChessPiece> pieces = getChessPieces(true);
         for(int i = 0; i < pieces.size(); i++) {
-            if(pieces.get(i).getTargetPosition()[0] == x && (pieces.get(i).getTargetPosition()[1] == z || pieces.get(i).enPassePossibility && pieces.get(i).targetZ == targetZ) && pieces.get(i).isBlack() ^ isBlack()) {
+            if(pieces.get(i).getTargetPosition()[0] == x && (pieces.get(i).getTargetPosition()[1] == z || pieces.get(i).enPassantPossibility && pieces.get(i).targetZ == targetZ) && pieces.get(i).isBlack() ^ isBlack()) {
                 return true;
             }
         }
