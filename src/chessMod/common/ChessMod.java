@@ -75,6 +75,7 @@ public class ChessMod{
         itemPieceMover = new ItemPieceMover(ItemPieceMoverID).setCreativeTab(CreativeTabs.tabTools).setUnlocalizedName("Piece Mover");
         gameRegisters();
         proxy.registerHandlers();
+        AchievementHandler.init();
     }
 
     @EventHandler
