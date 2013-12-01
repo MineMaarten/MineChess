@@ -33,7 +33,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
     public boolean isBlackTurn = false; // white's first.
     public boolean firstMove = true; // the first move of the piece (used in pawns, and castling)
     public boolean isCapturing = false; // this variable is only set during moving when the piece is going to capture a piece from the other color
-    public boolean enPassePossibility = false;
+    public boolean enPassantPossibility = false;
     public boolean resignConfirmed = false;
     public boolean computerPiece = false;
     public boolean turnToMobOnDeath = false;
@@ -133,7 +133,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
         compound.setBoolean("isBlack", isBlack());
         compound.setBoolean("isCapturing", isCapturing);
         compound.setBoolean("firstMove", firstMove);
-        compound.setBoolean("enPasse", enPassePossibility);
+        compound.setBoolean("enPasse", enPassantPossibility);
         compound.setBoolean("computerPiece", computerPiece);
         compound.setBoolean("solvedPuzzle", solvedPuzzle);
         compound.setInteger("targetX", targetX);
@@ -151,7 +151,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
         isBlackTurn = compound.getBoolean("isBlackTurn");
         firstMove = compound.getBoolean("firstMove");
         isCapturing = compound.getBoolean("isCapturing");
-        enPassePossibility = compound.getBoolean("enPasse");
+        enPassantPossibility = compound.getBoolean("enPasse");
         computerPiece = compound.getBoolean("computerPiece");
         solvedPuzzle = compound.getBoolean("solvedPuzzle");
         targetX = compound.getInteger("targetX");
@@ -180,14 +180,15 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
     @Override
     public boolean interact(EntityPlayer player){
         if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().itemID == ChessMod.itemPieceMover.itemID && player.inventory.getCurrentItem().getItemDamage() < 2) {
-            ItemPieceMover pieceMover = (ItemPieceMover)player.inventory.getCurrentItem().getItem();
-            if(pieceMover.entitySelected != null && isBlack() ^ pieceMover.entitySelected.isBlack()) {
+
+            EntityBaseChessPiece entitySelected = ItemPieceMover.getEntitySelected(player.worldObj, player.getCurrentEquippedItem());
+            if(entitySelected != null && isBlack() ^ entitySelected.isBlack()) {
                 // try to move to the enemy's piece if there is an ally piece selected.
                 if(!worldObj.isRemote) {
                     if(!getEnemyPiece().computerPiece) setLosingPlayer(player, isBlack()); //only set the XP repel to not puzzle boards.
-                    pieceMover.entitySelected.tryToGoTo(targetX, targetZ, player);
+                    entitySelected.tryToGoTo(targetX, targetZ, player);
                 } else {
-                    pieceMover.renderPositions.clear();
+                    //  ItemPieceMover.setRenderTiles(null, 0, player.getCurrentEquippedItem());
                 }
             } else if(player.inventory.getCurrentItem().getItemDamage() == 0 && isBlack() || player.inventory.getCurrentItem().getItemDamage() == 1 && !isBlack()) {
                 // else, select another ally piece
@@ -212,14 +213,15 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                 }
 
                 if(!worldObj.isRemote) ChessModUtils.sendUnlocalizedMessage(player, "message.player.selectPiece", EnumChatFormatting.DARK_AQUA.toString(), "entity." + EntityList.getEntityString(this) + ".name");
-                pieceMover.entitySelected = this;
+
+                ItemPieceMover.setEntitySelected(entityId, player.getCurrentEquippedItem());
 
                 if(!worldObj.isRemote) updateClient(getValidMoves(), player);
                 return false;
             } else {
                 if(!worldObj.isRemote) ChessModUtils.sendUnlocalizedMessage(player, "message.error.notYourPiece", EnumChatFormatting.RED.toString());
             }
-            if(!worldObj.isRemote) pieceMover.entitySelected = null;
+            ItemPieceMover.setEntitySelected(-1, player.getCurrentEquippedItem());
         } else if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().itemID == ChessMod.itemPieceMover.itemID && player.inventory.getCurrentItem().getItemDamage() == 4) {
             if(!computerPiece) {
                 EntityBaseChessPiece enemy = getEnemyPiece();
@@ -265,9 +267,13 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
         sendChatToNearbyPlayers(playerToExclude, chatMessage, EnumChatFormatting.WHITE.toString());
     }
 
-    public void sendChatToNearbyPlayers(EntityPlayer playerToExclude, String chatMessage, String... replacements){
+    private List<EntityPlayer> getNearbyPlayers(){
         AxisAlignedBB bbBox = AxisAlignedBB.getAABBPool().getAABB(xOffset - 5, (int)posY - 5, zOffset - 5, xOffset + 13, posY + 8, zOffset + 13);
-        List<EntityPlayer> players = worldObj.getEntitiesWithinAABB(EntityPlayer.class, bbBox);
+        return worldObj.getEntitiesWithinAABB(EntityPlayer.class, bbBox);
+    }
+
+    public void sendChatToNearbyPlayers(EntityPlayer playerToExclude, String chatMessage, String... replacements){
+        List<EntityPlayer> players = getNearbyPlayers();
         for(int i = 0; i < players.size(); i++) {
             if(playerToExclude == null || players.get(i) != playerToExclude) {
                 ChessModUtils.sendUnlocalizedMessage(players.get(i), chatMessage, replacements);
@@ -296,16 +302,19 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                     if(player != null) ChessModUtils.sendUnlocalizedMessage(player, "message.error.kingInCheck", EnumChatFormatting.RED.toString());
                     return false;
                 } else {
-                    if(!handleCastling()) {// if the player wasn't able to castle (due to moving the king over an in chess zone)
+                    if(!handleCastling(player)) {// if the player wasn't able to castle (due to moving the king over an in chess zone)
                         setTargetPosition(oldX, oldZ);
                         if(player != null) ChessModUtils.sendUnlocalizedMessage(player, "message.error.kingCheckCastling", EnumChatFormatting.RED.toString());
                         return false;
                     }
-                    clearEnPasse(); // none of the pawns have jumped two rows at once.
-                    enPassePossibility = this instanceof EntityPawn && firstMove && (targetZ == 3 || targetZ == 4);
+                    clearEnPassant(); // none of the pawns have jumped two rows at once.
+                    enPassantPossibility = this instanceof EntityPawn && firstMove && (targetZ == 3 || targetZ == 4);
                     firstMove = false; // set false if it weren't already.
                     if(this instanceof EntityKnight) motionY = 0.8D;
-                    if(player != null) ChessModUtils.sendUnlocalizedMessage(player, "message.player.movePiece", EnumChatFormatting.DARK_GREEN.toString(), "entity." + EntityList.getEntityString(this) + ".name", getColumnName(x) + (z + 1));
+                    if(player != null) {
+                        ChessModUtils.sendUnlocalizedMessage(player, "message.player.movePiece", EnumChatFormatting.DARK_GREEN.toString(), "entity." + EntityList.getEntityString(this) + ".name", getColumnName(x) + (z + 1));
+                        AchievementHandler.giveAchievement(player, AchievementHandler.MOVE_PIECE_ID);
+                    }
                     sendChatToNearbyPlayers(player, "message.broadcast.move" + (isBlack() ? "BlackPiece" : "WhitePiece"), EnumChatFormatting.DARK_GREEN.toString(), "entity." + EntityList.getEntityString(this) + ".name", getColumnName(x) + (z + 1));
                     if(!isCapturing) {
                         handleAfterTurn(player);
@@ -349,15 +358,25 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
         int movesAvailable = isGameOver();
         if(movesAvailable == 0) {
             if(isKingInDanger(!isBlack(), false)) {
-                if(player != null) ChessModUtils.sendUnlocalizedMessage(player, "message.broadcast.checkmate", EnumChatFormatting.BLUE.toString());
+                if(player != null) {
+                    ChessModUtils.sendUnlocalizedMessage(player, "message.broadcast.checkmate", EnumChatFormatting.BLUE.toString());
+                    AchievementHandler.giveAchievement(player, AchievementHandler.CHECKMATE_ID);
+                }
+                for(EntityPlayer nearbyPlayer : getNearbyPlayers())
+                    if(nearbyPlayer != player) AchievementHandler.giveAchievement(nearbyPlayer, AchievementHandler.LOSE_ID);
                 sendChatToNearbyPlayers(player, "message.broadcast.checkmate", EnumChatFormatting.DARK_RED.toString());
             } else {
                 if(player != null) ChessModUtils.sendUnlocalizedMessage(player, "message.broadcast.stalemate", EnumChatFormatting.BLUE.toString());
+                for(EntityPlayer nearbyPlayer : getNearbyPlayers())
+                    AchievementHandler.giveAchievement(nearbyPlayer, AchievementHandler.STALEMATE_ID);
                 sendChatToNearbyPlayers(player, "message.broadcast.stalemate", EnumChatFormatting.DARK_RED.toString());
             }
             setDeathTimer(isBlack());
         } else if(isKingInDanger(!isBlack(), false)) {
-            if(player != null) ChessModUtils.sendUnlocalizedMessage(player, "message.broadcast.check", EnumChatFormatting.YELLOW.toString());
+            if(player != null) {
+                ChessModUtils.sendUnlocalizedMessage(player, "message.broadcast.check", EnumChatFormatting.YELLOW.toString());
+                AchievementHandler.giveAchievement(player, AchievementHandler.CHECK_ID);
+            }
             sendChatToNearbyPlayers(player, "message.broadcast.check", EnumChatFormatting.RED.toString());
         }
         if(king != null) {
@@ -406,6 +425,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                     }
                 }
             }
+            if(player != null && deathTimer > 0) AchievementHandler.giveAchievement(player, AchievementHandler.PUZZLE_WIN_ID);
         }
     }
 
@@ -438,7 +458,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
         }
     }
 
-    private boolean handleCastling(){
+    private boolean handleCastling(EntityPlayer player){
         if(!(this instanceof EntityKing) || !firstMove) return true; // don't influence moves that haven't to do with castling at all.
         List<EntityBaseChessPiece> pieces = getChessPieces(true);
         for(int i = 0; i < pieces.size(); i++) {
@@ -460,6 +480,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                 }
             }
         }
+        if(player != null) AchievementHandler.giveAchievement(player, AchievementHandler.CASTLING_ID);
         return true;
     }
 
@@ -515,8 +536,9 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                             if(player != null) ChessModUtils.sendUnlocalizedMessage(player, "message.error.ownPieceInWay", EnumChatFormatting.RED.toString());
                             return false;
                         }
-                    } else if(chessPieces.get(j).enPassePossibility && chessPieces.get(j).targetZ == targetZ && (chessPieces.get(j).targetX == targetX - 1 || chessPieces.get(j).targetX == targetX + 1) && chessPieces.get(j).isBlack() ^ isBlack() && targetX != x && setCaptureIfneccessary) { // passe
+                    } else if(chessPieces.get(j).enPassantPossibility && chessPieces.get(j).targetZ == targetZ && (chessPieces.get(j).targetX == targetX - 1 || chessPieces.get(j).targetX == targetX + 1) && chessPieces.get(j).isBlack() ^ isBlack() && targetX != x && setCaptureIfneccessary) { // passant
                         chessPieces.get(j).kill();
+                        if(player != null) AchievementHandler.giveAchievement(player, AchievementHandler.EN_PASSANT_ID);
                     }
                 }
                 return true;
@@ -657,10 +679,10 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
         }
     }
 
-    public void clearEnPasse(){
+    public void clearEnPassant(){
         List<EntityBaseChessPiece> pieces = getChessPieces(false);
         for(int i = 0; i < pieces.size(); i++) {
-            pieces.get(i).enPassePossibility = false; // notify to all the pieces that they are not able to En Passe.
+            pieces.get(i).enPassantPossibility = false; // notify to all the pieces that they are not able to En Passant.
         }
     }
 
