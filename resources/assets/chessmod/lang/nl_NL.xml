@@ -70,4 +70,31 @@
 	<entry key="message.ai.postTurn.slowMove">[Chess KI] Hier moest ik lang over nadenken. Je maakt het moeilijk voor me!</entry>
 	<entry key="message.ai.postTurn.aiGoodMove">[Chess KI] Haha, die is voor jou!</entry>
 	<entry key="message.ai.postTurn.advantage">[Chess KI] Ik ben aan het winnen!</entry>
+	
+	<entry key="achievement.movePiece">De stap zetten</entry>
+    <entry key="achievement.movePiece.desc">Beweeg een schaakstuk.</entry>
+    <entry key="achievement.castling">Twee tegelijkertijd?</entry>
+    <entry key="achievement.castling.desc">Rokeer.</entry>
+    <entry key="achievement.enterArena">Laat het denken beginnen!</entry>
+    <entry key="achievement.enterArena.desc">Betreed een puzzel arena.</entry>
+	<entry key="achievement.puzzleFailCreepy">Griezelig!</entry>
+    <entry key="achievement.puzzleFailCreepy.desc">Faal een schaakpuzzel.</entry>
+    <entry key="achievement.puzzleFailPotion">Onder invloed!</entry>
+    <entry key="achievement.puzzleFailPotion.desc">Faal een schaakpuzzel.</entry>
+    <entry key="achievement.puzzleFailTransform">Transformatie!</entry>
+    <entry key="achievement.puzzleFailTransform.desc">Faal een schaakpuzzel.</entry>
+    <entry key="achievement.puzzleFailFire">Brand!</entry>
+    <entry key="achievement.puzzleFailFire.desc">Faal een schaakpuzzel.</entry>
+    <entry key="achievement.enPassant">Voorbij lopen</entry>
+    <entry key="achievement.enPassant.desc">Voer een En Passant beweging uit.</entry>
+    <entry key="achievement.puzzleWin">Mens > Computer</entry>
+    <entry key="achievement.puzzleWin.desc">Win een schaakpuzzel.</entry>
+    <entry key="achievement.stalemate">Bevroren!</entry>
+    <entry key="achievement.stalemate.desc">Krijg een patstelling.</entry>
+    <entry key="achievement.checkmate">SCHAAKMAT!</entry>
+    <entry key="achievement.checkmate.desc">Zet iemand schaakmat.</entry>
+    <entry key="achievement.lose">schaakmat...</entry>
+    <entry key="achievement.lose.desc">Verlies door een schaakmat.</entry>
+    <entry key="achievement.check">SCHAAK!</entry>
+    <entry key="achievement.check.desc">Zet iemand schaak.</entry>
 </properties>

@@ -69,4 +69,31 @@
 	<entry key="message.ai.postTurn.slowMove">[Chess AI] That was a tough one to figure out! You're making it really hard for me!</entry>
 	<entry key="message.ai.postTurn.aiGoodMove">[Chess AI] Haha, take that!</entry>
 	<entry key="message.ai.postTurn.advantage">[Chess AI] Victory is mine!</entry>
+	
+	<entry key="achievement.movePiece">Making a move</entry>
+    <entry key="achievement.movePiece.desc">Move a chesspiece.</entry>
+    <entry key="achievement.castling">Two at a time?</entry>
+    <entry key="achievement.castling.desc">Make a castling movement.</entry>
+    <entry key="achievement.enterArena">Let the thinking commence!</entry>
+    <entry key="achievement.enterArena.desc">Enter a chess puzzle arena.</entry>
+	<entry key="achievement.puzzleFailCreepy">Creepy!</entry>
+    <entry key="achievement.puzzleFailCreepy.desc">Fail a chess puzzle.</entry>
+    <entry key="achievement.puzzleFailPotion">Drugged!</entry>
+    <entry key="achievement.puzzleFailPotion.desc">Fail a chess puzzle.</entry>
+    <entry key="achievement.puzzleFailTransform">Transformers!</entry>
+    <entry key="achievement.puzzleFailTransform.desc">Fail a chess puzzle.</entry>
+    <entry key="achievement.puzzleFailFire">Burn baby burn!</entry>
+    <entry key="achievement.puzzleFailFire.desc">Fail a chess puzzle.</entry>
+    <entry key="achievement.enPassant">Passing by</entry>
+    <entry key="achievement.enPassant.desc">Make an En Passant movement.</entry>
+    <entry key="achievement.puzzleWin">Humans > Computers</entry>
+    <entry key="achievement.puzzleWin.desc">Win a chess puzzle.</entry>
+    <entry key="achievement.stalemate">Freeze!</entry>
+    <entry key="achievement.stalemate.desc">Get a stalemate.</entry>
+    <entry key="achievement.checkmate">CHECKMATE!</entry>
+    <entry key="achievement.checkmate.desc">Win by checkmating.</entry>
+    <entry key="achievement.lose">checkmate...</entry>
+    <entry key="achievement.lose.desc">Lose by a checkmate.</entry>
+    <entry key="achievement.check">CHECK!</entry>
+    <entry key="achievement.check.desc">Check someone.</entry>
 </properties>
