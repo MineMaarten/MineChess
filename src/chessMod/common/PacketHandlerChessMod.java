@@ -36,22 +36,13 @@ public class PacketHandlerChessMod implements IPacketHandler{
         // System.out.println("Packet received, id = " + packetID);
         switch(packetID){
             case GIVE_ACHIEVEMENT_ID:
-                /*
-                 * int achievement = dat.readInt();
-                 * System.out.println("achievement get: " + achievement);
-                 * EntityPlayer entityPlayer = (EntityPlayer)player;
-                 * if(achievement < 5){
-                 * entityPlayer.addStat(minesweeperMod.achieveTilesCleared
-                 * [achievement], 1); }else if(achievement < 9){
-                 * entityPlayer.addStat
-                 * (minesweeperMod.achieveDifficultyCleared[achievement - 5],
-                 * 1); }
-                 */
+                int achieve = dat.readInt();
+                entityPlayer.addStat(AchievementHandler.getAchieveFromID(achieve), 1);
                 break;
             case PREVIEW_UPDATE_ID:
                 List<int[]> renderPositions = new ArrayList<int[]>();
                 // entityPlayer.addChatMessage("Moves: ");
-                ChessModDrawBlockHighlightHandler.renderHeight = dat.readInt();
+                int renderHeight = dat.readInt();
                 int listSize = dat.readInt();
                 for(int i = 0; i < listSize; i++) {
                     int[] move = new int[2];
@@ -62,8 +53,7 @@ public class PacketHandlerChessMod implements IPacketHandler{
                 ChessModDrawBlockHighlightHandler.pulse = 0;
 
                 if(entityPlayer.getCurrentEquippedItem().getItem().itemID == ChessMod.itemPieceMover.itemID) {
-                    ItemPieceMover pieceMover = (ItemPieceMover)entityPlayer.getCurrentEquippedItem().getItem();
-                    pieceMover.renderPositions = renderPositions;
+                    ItemPieceMover.setRenderTiles(renderPositions, renderHeight, entityPlayer.getCurrentEquippedItem());
                 }
                 break;
             case SEND_CHAT_ID:
@@ -192,6 +182,22 @@ public class PacketHandlerChessMod implements IPacketHandler{
         }
         Packet250CustomPayload pkt = new Packet250CustomPayload();
         pkt.channel = "chessMod";
+        pkt.data = bos.toByteArray();
+        pkt.length = bos.size();
+        pkt.isChunkDataPacket = true;
+
+        return pkt;
+    }
+
+    public static Packet giveAchievement(int achieveID){
+        ByteArrayOutputStream bos = new ByteArrayOutputStream(140);
+        DataOutputStream dos = new DataOutputStream(bos);
+        try {
+            dos.writeInt(GIVE_ACHIEVEMENT_ID);
+            dos.writeInt(achieveID);
+        } catch(IOException e) {}
+        Packet250CustomPayload pkt = new Packet250CustomPayload();
+        pkt.channel = "chessmod";
         pkt.data = bos.toByteArray();
         pkt.length = bos.size();
         pkt.isChunkDataPacket = true;
