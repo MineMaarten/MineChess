@@ -106,6 +106,7 @@ public class EntityKing extends EntityBaseChessPiece{
             EntityPlayer playerNearby = playersNearby.get(i);
             if(!playersInArea.contains(playerNearby)) {
                 playersInArea.add(playerNearby);
+                AchievementHandler.giveAchievement(playerNearby, AchievementHandler.ENTER_ARENA_ID);
                 ChessModUtils.sendUnlocalizedMessage(playerNearby, "message.broadcast.puzzleObjective" + (isBlack() ? "Black" : "White"), EnumChatFormatting.BLUE.toString(), mateInTimes + "");
             }
         }
