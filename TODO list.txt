@@ -1,0 +1,1 @@
+-Add a coordinate system renderer (so you can see the 1-8 and A-H around the board).
