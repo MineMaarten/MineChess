@@ -5,10 +5,12 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
@@ -24,13 +26,10 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 
 public class ItemPieceMover extends Item{
-    public EntityBaseChessPiece entitySelected; //TODO move selected entity to the NBT of the item.
-    public List<int[]> renderPositions; // used in the blockhighlighthandler
     private final Icon[] texture;
 
     public ItemPieceMover(int par1){
         super(par1);
-        renderPositions = new ArrayList<int[]>();
         texture = new Icon[5];
         setHasSubtypes(true);
     }
@@ -77,6 +76,7 @@ public class ItemPieceMover extends Item{
     @Override
     public boolean onItemUse(ItemStack iStack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10){
         if(iStack.getItemDamage() < 2) {
+            EntityBaseChessPiece entitySelected = getEntitySelected(world, iStack);
             if(entitySelected != null && !entitySelected.isDead && !world.isRemote) {
                 try {
                     if(!entitySelected.getEnemyPiece().computerPiece) entitySelected.setLosingPlayer(player, entitySelected.isBlack());
@@ -84,10 +84,10 @@ public class ItemPieceMover extends Item{
                 } catch(Exception e) {
 
                 }
-                entitySelected = null;
+                setEntitySelected(-1, iStack);
                 return true;
             } else {
-                renderPositions.clear();
+                // setRenderTiles(null, 0, iStack);
             }
         } else if(iStack.getItemDamage() == 2) {
             if(world.isRemote) return false;
@@ -123,6 +123,7 @@ public class ItemPieceMover extends Item{
     @Override
     public void addInformation(ItemStack iStack, EntityPlayer player, List list, boolean par4){
         if(iStack.getItemDamage() < 2) {
+            EntityBaseChessPiece entitySelected = getEntitySelected(player.worldObj, iStack);
             if(entitySelected != null) {
                 list.add(LocalizationHandler.getStringFromUnlocalizedParts(entitySelected.isBlack() ? "tooltip.selectedBlackPiece" : "tooltip.selectedWhitePiece", EnumChatFormatting.GRAY.toString(), "entity." + EntityList.getEntityString(entitySelected) + ".name", entitySelected.getColumnName(entitySelected.targetX) + (entitySelected.targetZ + 1)));
             } else {
@@ -187,5 +188,53 @@ public class ItemPieceMover extends Item{
             }
         }
 
+    }
+
+    public static void setEntitySelected(int entityID, ItemStack stack){
+        if(!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
+        stack.getTagCompound().setInteger("entitySelected", entityID);
+    }
+
+    public static EntityBaseChessPiece getEntitySelected(World world, ItemStack stack){
+        Entity entity = world.getEntityByID(stack.hasTagCompound() ? stack.getTagCompound().getInteger("entitySelected") : -1);
+        return entity instanceof EntityBaseChessPiece ? (EntityBaseChessPiece)entity : null;
+    }
+
+    public static void setRenderTiles(List<int[]> tiles, int renderHeight, ItemStack stack){
+        NBTTagCompound tileTag = new NBTTagCompound();
+        if(tiles != null) {
+            tileTag.setInteger("size", tiles.size());
+            tileTag.setInteger("renderHeight", renderHeight);
+            for(int i = 0; i < tiles.size(); i++) {
+                tileTag.setIntArray("tile" + i, tiles.get(i));
+            }
+        }
+        if(!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
+        stack.getTagCompound().setCompoundTag("renderTiles", tileTag);
+    }
+
+    public static List<int[]> getRenderTiles(ItemStack stack){
+        if(stack.hasTagCompound()) {
+            NBTTagCompound tileTag = stack.getTagCompound().getCompoundTag("renderTiles");
+            if(tileTag != null) {
+                List<int[]> tiles = new ArrayList<int[]>();
+                int size = tileTag.getInteger("size");
+                for(int i = 0; i < size; i++) {
+                    tiles.add(tileTag.getIntArray("tile" + i));
+                }
+                return tiles;
+            }
+        }
+        return null;
+    }
+
+    public static int getRenderHeight(ItemStack stack){
+        if(stack.hasTagCompound()) {
+            NBTTagCompound tileTag = stack.getTagCompound().getCompoundTag("renderTiles");
+            if(tileTag != null) {
+                return tileTag.getInteger("renderHeight");
+            }
+        }
+        return 0;
     }
 }
