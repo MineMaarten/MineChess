@@ -51,6 +51,7 @@ public class ChessModUtils{
                         world.setBlock(x + i, y - 2, z + j, Block.fire.blockID, 1, 3);
                     }
                 }
+                if(player != null) AchievementHandler.giveAchievement(player, AchievementHandler.PUZZLE_FAIL_FIRE);
                 return;
             case 1:
                 // play a creepy sound. A maximum of 5 creepers spawn around the
@@ -77,6 +78,7 @@ public class ChessModUtils{
                         if(entityCount >= 5) return;
                     }
                 }
+                if(player != null) AchievementHandler.giveAchievement(player, AchievementHandler.PUZZLE_FAIL_CREEPER);
                 return;
             case 2:
                 // Turn every dying enemy chesspiece into mobs.
@@ -84,6 +86,7 @@ public class ChessModUtils{
                 for(EntityBaseChessPiece chessPiece : pieces) {
                     if(chessPiece.isBlack() != piece.isBlack()) chessPiece.turnToMobOnDeath = true;
                 }
+                if(player != null) AchievementHandler.giveAchievement(player, AchievementHandler.PUZZLE_FAIL_TRANSFORM);
                 return;
             case 3:
                 // give the player random potion effects.
@@ -95,6 +98,7 @@ public class ChessModUtils{
                     } while(!isPotionBadEffect(randomPotion.id) || randomPotion == Potion.harm);
                     player.addPotionEffect(new PotionEffect(randomPotion.id, 200 + rand.nextInt(400))); //make the potion effect last for 10-30 secs.
                 }
+                if(player != null) AchievementHandler.giveAchievement(player, AchievementHandler.PUZZLE_FAIL_POTION);
                 return;
         }
 
