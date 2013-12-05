@@ -90,5 +90,33 @@
 <entry key="message.ai.postTurn.slowMove">[IA Ajedrez] ¡Eso fue difícil de preveer! ¡Me lo estás poniendo realmente complicado!</entry>
 <entry key="message.ai.postTurn.aiGoodMove">[IA Ajedrez] ¡Jaja, toma eso!</entry>
 <entry key="message.ai.postTurn.advantage">[IA Ajedrez] ¡La victoria es mía!</entry>
+
+<entry key="achievement.movePiece">Haciendo un movimiento</entry>
+<entry key="achievement.movePiece.desc">Mueve una pieza de ajedrez.</entry>
+<entry key="achievement.castling">¿Dos a la vez?</entry>
+<entry key="achievement.castling.desc">Haz un movimiento de enroque.</entry>
+<entry key="achievement.enterArena">¡Empecemos a pensar!</entry>
+<entry key="achievement.enterArena.desc">Entra en un puzzle de ajedrez.</entry>
+<entry key="achievement.puzzleFailCreepy">¡Horripilante!</entry>
+<entry key="achievement.puzzleFailCreepy.desc">Falla un puzzle de ajedrez.</entry>
+<entry key="achievement.puzzleFailPotion">¡Drogado!</entry>
+<entry key="achievement.puzzleFailPotion.desc">Falla un puzzle de ajedrez.</entry>
+<entry key="achievement.puzzleFailTransform">¡Transformación!</entry>
+<entry key="achievement.puzzleFailTransform.desc">Falla un puzzle de ajedrez.</entry>
+<entry key="achievement.puzzleFailFire">¡Quémate nene, quémate!</entry>
+<entry key="achievement.puzzleFailFire.desc">Falla un puzzle de ajedrez.</entry>
+<entry key="achievement.enPassant">Pasando por</entry>
+<entry key="achievement.enPassant.desc">Haz una Captura en Paso</entry>
+<entry key="achievement.puzzleWin">Humanos > Ordenadores</entry>
+<entry key="achievement.puzzleWin.desc">Gana un puzzle de ajedrez.</entry>
+<entry key="achievement.stalemate">¡Helado!</entry>
+<entry key="achievement.stalemate.desc">Consigue unas tablas.</entry>
+<entry key="achievement.checkmate">¡JAQUE MATE!</entry>
+<entry key="achievement.checkmate.desc">Gana por un jaque mate.</entry>
+<entry key="achievement.lose">jaque mate...</entry>
+<entry key="achievement.lose.desc">Pierde por un jaque mate.</entry>
+<entry key="achievement.check">¡JAQUE!</entry>
+<entry key="achievement.check.desc">Haz jaque a alguien.</entry>
+
 </properties>
 
