@@ -1,0 +1,94 @@
+item.pieceMover.blackPieceMover.name=黑子移动器
+item.pieceMover.whitePieceMover.name=白子移动器
+item.pieceMover.chessBoardGenerator.name=棋盘生成器
+item.pieceMover.chessBoardColumn.name=棋盘列
+item.pieceMover.chessAI.name=AI注入器
+        
+entity.MineChess.Rook.name=车
+entity.MineChess.King.name=王
+entity.MineChess.Pawn.name=卒
+entity.MineChess.Knight.name=马
+entity.MineChess.Queen.name=后
+entity.MineChess.Bishop.name=象
+        
+tooltip.selectedWhitePiece=你选定白方(从%s到%s).
+tooltip.selectedBlackPiece=你选定黑方(从%s到%s).
+tooltip.noSelectedPiece=-未选择执子方-
+tooltip.aiInjector=右击某种颜色的棋子使其由AI控制.
+
+message.error.targetOccupied=[MineChess] 你不能在此处生成棋盘:在选定位置已经存在其他棋盘.
+message.error.computerPiece=[MineChess] 该方棋子由电脑控制!
+message.error.notYourPiece=[MineChess] 该棋子不属于你控制!
+message.error.pieceCaptured=[MineChess] 该方棋子已经被别人选择!
+message.error.aiPuzzle=[MineChess] 在挑战残局谜题时不能给予棋子AI.
+message.error.alreadyAI=[MineChess] 该方已由电脑执子!
+message.error.noPieceMover=[MineChess] 你需要一个棋子移动器才能落子!
+message.error.kingInCheck=[MineChess] 移动无效.你的王正被将军!
+message.error.kingCheckCastling=[MineChess] 你不能进行王车易位.你的王会走到被将军的位置!
+message.error.blacksTurn=[MineChess] 黑方回合!
+message.error.whitesTurn=[MineChess] 白方回合!
+message.error.ownPieceInWay=[MineChess] 你不能在这里落子.你自己的棋子在此处.
+message.error.movementRuleBlocks=[MineChess] 你不能在这里落子.有棋子挡在中间或者不符合规则!
+message.error.noChessboardsNearby=[MineChess] 附近没有棋局,和棋要求无效!
+# message.error.pawnAwaitingPromotion=
+        
+message.error.bugReport.aiWrongMove=[Minechess AI] AI出现无效落子.电脑方失去AI!
+message.error.bugReport.capturedKing=[MineChess]出现bug!王永远不可能被占位!请在minecraftforum上将其报告给模组作者MineMaarten.非常感谢.
+        
+message.player.youSurrenderWhiteWon=[MineChess] 你已投降!白方胜利!
+message.player.youSurrenderBlackWon=[MineChess] 你已投降!黑方胜利!
+message.player.confirmSurrender=[MineChess] 你确定要投降吗?再次潜行按住右键右键.
+message.player.selectPiece=[MineChess] 已选择%s.
+message.player.transformWhiteAI=[MineChess] 白子移交给电脑执行.
+message.player.transformBlackAI=[MineChess] 黑子移交给电脑执行.
+message.player.movePiece=[MineChess] 移动%s到%s.
+message.broadcast.whiteSurrender=[MineChess] 白方投降!
+message.broadcast.blackSurrender=[MineChess] 黑方投降!
+message.broadcast.moveBlackPiece=[MineChess] 黑子从%s移动到%s.
+message.broadcast.moveWhitePiece=[MineChess] 白子从%s移动到%s.
+message.broadcast.stalemate=[MineChess] 平局!
+message.broadcast.checkmate=[MineChess] 将杀!
+message.broadcast.check=[MineChess] 将军!
+message.broadcast.puzzleObjectiveBlack=[Chess Puzzle] 目标:在%s步内将杀黑方.
+message.broadcast.puzzleObjectiveWhite=[Chess Puzzle] 目标:在%s步内将杀白方.
+        
+message.broadcast.inactiveDraw=[MineChess] 过去的%s步落子并不积极,你可以输入/draw来要求平局.
+message.broadcast.samePositionThrice=[MineChess] 目前的棋局已经维持了%s次了,你可以输入/draw来要求平局.
+message.broadcast.drawRequestAllowed=[MineChess] %s要求平局.如果你同意,就为和棋.
+message.broadcast.drawRequestRejected=[MineChess] %s要求平局.要求被拒绝.
+    
+message.ai.preTurn.thinking=[Chess AI] 嗯,容我看看…
+message.ai.preTurn.tough=[Chess AI] 局势不妙…
+message.ai.preTurn.goodMove=[Chess AI] 好棋!让我看看我能怎么落子…
+message.ai.postTurn.yourTurn=[Chess AI] 该你走了.现在是你的回合.
+message.ai.postTurn.quickMove=[Chess AI] 不假思索就知道该如何落子!
+message.ai.postTurn.slowMove=[Chess AI] 局势不妙!你真把我逼到窘况了呢!
+message.ai.postTurn.aiGoodMove=[Chess AI] 哈哈,我已落子!
+message.ai.postTurn.advantage=[Chess AI] 胜利属于我!
+        
+achievement.movePiece=移棋
+achievement.movePiece.desc=移动一枚棋子.
+achievement.castling=一箭双雕?
+achievement.castling.desc=王车易位.
+achievement.enterArena=开动脑筋!
+achievement.enterArena.desc=进入残局谜题区域.
+achievement.puzzleFailCreepy=毛骨悚然!
+achievement.puzzleFailCreepy.desc=挑战残局谜题失败.
+achievement.puzzleFailPotion=麻醉!Drugged!
+achievement.puzzleFailPotion.desc=挑战残局谜题失败.
+achievement.puzzleFailTransform=转换!
+achievement.puzzleFailTransform.desc=挑战残局谜题失败.
+achievement.puzzleFailFire=烧吧宝贝烧吧!
+achievement.puzzleFailFire.desc=挑战残局谜题失败.
+achievement.enPassant=经过
+achievement.enPassant.desc=吃过路兵!
+achievement.puzzleWin=人类>电脑
+achievement.puzzleWin.desc=赢得残局谜题.
+achievement.stalemate=冻结!
+achievement.stalemate.desc=平局.
+achievement.checkmate=将杀!
+achievement.checkmate.desc=将军得胜!
+achievement.lose=被将杀…
+achievement.lose.desc=被将军,输棋.
+achievement.check=将军!
+achievement.check.desc=对某某将军.

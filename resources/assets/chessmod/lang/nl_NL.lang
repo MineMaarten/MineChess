@@ -1,0 +1,95 @@
+item.pieceMover.blackPieceMover.name=Zwarte Stuk Beweger
+item.pieceMover.whitePieceMover.name=Witte Stuk Beweger
+item.pieceMover.chessBoardGenerator.name=Schaakbord Generator
+item.pieceMover.chessBoardColumn.name=Schaakbord Kolom
+item.pieceMover.chessAI.name=KI Injector
+	
+entity.MineChess.Rook.name=Toren
+entity.MineChess.King.name=Koning
+entity.MineChess.Pawn.name=Pion
+entity.MineChess.Knight.name=Paard
+entity.MineChess.Queen.name=Dame
+entity.MineChess.Bishop.name=Loper
+	
+tooltip.selectedWhitePiece=Witte %s van %s geselecteerd.
+tooltip.selectedBlackPiece=Zwarte %s van %s geselecteerd.
+tooltip.noSelectedPiece=-Geen stuk geselecteerd-
+tooltip.aiInjector=Rechts klik op een stuk van een bepaalde kleur om dit kleur team kunstmatige intelligentie te geven.
+
+message.error.targetOccupied=[MineChess] Je kan hier geen schaakbord genereren: Er staat al een schaakbord op deze locatie.
+message.error.computerPiece=[MineChess] Dit stuk wordt bestuurd door de computer!
+message.error.notYourPiece=[MineChess] Dit is niet jouw stuk!
+message.error.pieceCaptured=[MineChess] Het geselecteerde stuk is al geslagen!
+message.error.aiPuzzle=[MineChess] Je kan geen kunstmatige intelligentie injecteren wanneer je tegen een puzzel speelt!
+message.error.alreadyAI=[MineChess] Dit team is al een computer!
+message.error.noPieceMover=[MineChess] Je hebt een Stuk Beweger nodig om stukken te kunnen bewegen!
+message.error.kingInCheck=[MineChess] Deze beweging is illegaal: Je koning staat schaak!
+message.error.kingCheckCastling=[MineChess] Je kan hier niet rokeren: Je koning zou over vakjes moeten bewegen die schaak staan!
+message.error.blacksTurn=[MineChess] Het is zwart zijn beurt!
+message.error.whitesTurn=[MineChess] Het is wit zijn beurt!
+message.error.ownPieceInWay=[MineChess] Je kan hier niet naartoe bewegen: Je eigen stuk staat hier al.
+message.error.movementRuleBlocks=[MineChess] Je kan hier niet naartoe bewegen: Er staan stukken in de weg of het mag niet wegens bewegingsregels!
+message.error.noChessboardsNearby=[MineChess] Er zijn geen schaakborden in de buurt waar je een remise kan aanvragen!
+message.error.pawnAwaitingPromotion=[MineChess] Een pion wacht op promotie. Hij moet gepromoveerd worden voordat we verder kunnen met het spel.	
+	
+message.error.bugReport.aiWrongMove=[Minechess KI] De KI heeft een beweging opgegeven die niet mag! Daarom is heeft het computerteam haar KI verloren (en kan bestuurd worden door een speler)!
+message.error.bugReport.capturedKing=[MineChess]Dit is een fout in de code! De koning kan nooit geslagen worden! Graag de situatie aan MineMaarten reportern, die je kan vinden op minecraftforum.net . Alvast bedankt!
+	
+message.player.youSurrenderWhiteWon=[MineChess] Je hebt opgegeven! Wit heeft gewonnen!
+message.player.youSurrenderBlackWon=[MineChess] Je hebt opgegeven! Zwart heeft gewonnen!
+message.player.confirmSurrender=[MineChess] Weet je zeker dat je wilt opgeven? Shift-Rechtsklik nog een keer om te bevestigen.
+message.player.selectPiece=[MineChess] %s geselecteerd.
+message.player.transformWhiteAI=[MineChess] De witte stukken zijn getransformeerd in computers.
+message.player.transformBlackAI=[MineChess] De zwarte stukken zijn getransformeerd in computers.
+message.player.movePiece=[MineChess] %s naar %s.
+message.broadcast.whiteSurrender=[MineChess] Wit heeft opgegeven!
+message.broadcast.blackSurrender=[MineChess] Zwart heeft opgegeven!
+message.broadcast.moveBlackPiece=[MineChess] Zwart heeft een %s naar %s bewogen.
+message.broadcast.moveWhitePiece=[MineChess] Wit heeft een %s naar %s bewogen.
+message.broadcast.stalemate=[MineChess] PATSTELLING!
+message.broadcast.checkmate=[MineChess] SCHAAKMAT!
+message.broadcast.check=[MineChess] SCHAAK!
+message.broadcast.puzzleObjectiveBlack=[Schaakpuzzel] Doel: Zet zwart in %s beweging(en) schaakmat.
+message.broadcast.puzzleObjectiveWhite=[Schaakpuzzel] Doel: Zet wit in %s beweging(en) schaakmat.
+	
+message.broadcast.inactiveDraw=[MineChess] Er is de laatste %s bewegingen geen actieve beweging geweest. Je kan een remise vragen door /draw te typen.
+message.broadcast.samePositionThrice=[MineChess] Deze positie is nu %s keer voorbij gekomen. Je kan een remise vragen door /draw te typen.
+message.broadcast.drawRequestAllowed=[MineChess] Een remise is aangevraagd door %s. Dit is toegestaan en het is nu dus REMISE!
+message.broadcast.drawRequestRejected=[MineChess] Een remise is aangevraagd door %s. Deze aanvraag is afgewezen.
+    
+	
+message.ai.preTurn.thinking=[Chess KI] Hmm, eens even kijken...
+message.ai.preTurn.tough=[Chess KI] Ik zit in een benarde positie hier...
+message.ai.preTurn.goodMove=[Chess KI] Goed gedaan! Eens zien wat ik kan doen...
+message.ai.postTurn.yourTurn=[Chess KI] Ga je gang, het is nu jouw beurt.
+message.ai.postTurn.quickMove=[Chess KI] Ik hoefde niet lang over die beweging na te denken!
+message.ai.postTurn.slowMove=[Chess KI] Hier moest ik lang over nadenken. Je maakt het moeilijk voor me!
+message.ai.postTurn.aiGoodMove=[Chess KI] Haha, die is voor jou!
+message.ai.postTurn.advantage=[Chess KI] Ik ben aan het winnen!
+	
+achievement.movePiece=De stap zetten
+achievement.movePiece.desc=Beweeg een schaakstuk.
+achievement.castling=Twee tegelijkertijd?
+achievement.castling.desc=Rokeer.
+achievement.enterArena=Laat het denken beginnen!
+achievement.enterArena.desc=Betreed een puzzel arena.
+achievement.puzzleFailCreepy=Griezelig!
+achievement.puzzleFailCreepy.desc=Faal een schaakpuzzel.
+achievement.puzzleFailPotion=Onder invloed!
+achievement.puzzleFailPotion.desc=Faal een schaakpuzzel.
+achievement.puzzleFailTransform=Transformatie!
+achievement.puzzleFailTransform.desc=Faal een schaakpuzzel.
+achievement.puzzleFailFire=Brand!
+achievement.puzzleFailFire.desc=Faal een schaakpuzzel.
+achievement.enPassant=Voorbij lopen
+achievement.enPassant.desc=Voer een En Passant beweging uit.
+achievement.puzzleWin=Mens > Computer
+achievement.puzzleWin.desc=Win een schaakpuzzel.
+achievement.stalemate=Bevroren!
+achievement.stalemate.desc=Krijg een patstelling.
+achievement.checkmate=SCHAAKMAT!
+achievement.checkmate.desc=Zet iemand schaakmat.
+achievement.lose=schaakmat...
+achievement.lose.desc=Verlies door een schaakmat.
+achievement.check=SCHAAK!
+achievement.check.desc=Zet iemand schaak.

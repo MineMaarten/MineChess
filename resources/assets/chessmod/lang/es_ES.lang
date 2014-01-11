@@ -1,0 +1,115 @@
+item.pieceMover.blackPieceMover.name=Movedor de Piezas Negras
+item.pieceMover.whitePieceMover.name=Movedor de Piezas Blancas
+item.pieceMover.chessBoardGenerator.name=Generador de Tablero de Ajedrez
+item.pieceMover.chessBoardColumn.name=Columna del Tablero de Ajedrez
+item.pieceMover.chessAI.name=Inyector IA
+
+entity.MineChess.Rook.name=Torre
+entity.MineChess.King.name=Rey
+entity.MineChess.Pawn.name=Peón
+entity.MineChess.Knight.name=Caballo
+entity.MineChess.Queen.name=Dama
+entity.MineChess.Bishop.name=Alfil
+
+entity.MineChess.Rook.replacement.@=a
+entity.MineChess.King.replacement.@=o
+entity.MineChess.Pawn.replacement.@=o
+entity.MineChess.Knight.replacement.@=o
+entity.MineChess.Queen.replacement.@=a
+entity.MineChess.Bishop.replacement.@=o
+
+entity.MineChess.Rook.replacement.#=la
+entity.MineChess.King.replacement.#=el
+entity.MineChess.Pawn.replacement.#=el
+entity.MineChess.Knight.replacement.#=el
+entity.MineChess.Queen.replacement.#=la
+entity.MineChess.Bishop.replacement.#=el
+
+entity.MineChess.Rook.replacement.$=una
+entity.MineChess.King.replacement.$=un
+entity.MineChess.Pawn.replacement.$=un
+entity.MineChess.Knight.replacement.$=un
+entity.MineChess.Queen.replacement.$=una
+entity.MineChess.Bishop.replacement.$=un
+
+tooltip.selectedWhitePiece=Seleccionad@ # %s Blanc@ desde %s.
+tooltip.selectedBlackPiece=Seleccionad@ # %s Negr@ desde %s.
+tooltip.noSelectedPiece=-Ninguna Pieza Seleccionada-
+tooltip.aiInjector=Click derecho sobre una pieza de ajedrez para convertir ese color en un equipo controlado por la IA.
+
+message.error.targetOccupied=[MineChess] No se puede generar un tablero de ajedrez aquí: Ya hay piezas en la ubicación deseada.
+message.error.computerPiece=[MineChess] ¡Esta pieza está controlada por el ordenador!
+message.error.notYourPiece=[MineChess] ¡Esta no es tu pieza!
+message.error.pieceCaptured=[MineChess] ¡La pieza seleccionada ha sido capturada!
+message.error.aiPuzzle=[MineChess] ¡No puedes dar piezas a la IA cuando están luchando en un Puzzle de Ajedrez!
+message.error.alreadyAI=[MineChess] ¡Este lado ya está controlado por la IA!
+message.error.noPieceMover=[MineChess] ¡Necesitas un Movedor de piezas para poder mover piezas!
+message.error.kingInCheck=[MineChess] Este movimiento no es válido. ¡Tu Rey está en Jaque!
+message.error.kingCheckCastling=[MineChess] No puedes enrocarte aquí. ¡El Rey tendrá que moverse sobre casillas en Jaque!
+message.error.blacksTurn=[MineChess] ¡Es el turno de las negras!
+message.error.whitesTurn=[MineChess] ¡Es el turno de las blancas!
+message.error.ownPieceInWay=[MineChess] No puedes mover hasta aquí. Tu propia pieza se encuentra ahí.
+message.error.movementRuleBlocks=[MineChess] No puedes mover aquí. ¡Una pieza se encuentra en el medio o una regla de movimiento lo impide!
+message.error.noChessboardsNearby=[MineChess] ¡No hay un tablero de ajedrez cercano para solicitar un Empate!
+# message.error.pawnAwaitingPromotion=
+
+message.error.bugReport.aiWrongMove=[Minechess AI] La IA propuso un movimiento no válido. ¡Todas las piezas del ordenador han perdido su IA!
+message.error.bugReport.capturedKing=[MineChess]¡Esto es un error! ¡El Rey nunca puede ser capturado! Por favor informe de la situación a MineMaarten que se encuentra en minecraftforum.net . Gracias de antemano.
+
+message.player.youSurrenderWhiteWon=[MineChess] ¡Te has rendido! ¡Blancas ganan!
+message.player.youSurrenderBlackWon=[MineChess] ¡Te has rendido! Negras ganan!
+message.player.confirmSurrender=[MineChess] ¿Estás seguro que te quieres rendir? Shift y Click derecho otra vez para confirmar.
+message.player.selectPiece=[MineChess] Seleccionad@ # %s.
+message.player.transformWhiteAI=[MineChess] Transformadas las piezas blancas en IA.
+message.player.transformBlackAI=[MineChess] Transformadas las piezas negras en IA.
+message.player.movePiece=[MineChess] Moviendo %s a %s.
+message.broadcast.whiteSurrender=[MineChess] ¡Blancas se rinden!
+message.broadcast.blackSurrender=[MineChess] ¡Negras se rinden!
+message.broadcast.moveBlackPiece=[MineChess] Negras mueven $ %s a %s.
+message.broadcast.moveWhitePiece=[MineChess] Blancas mueven $ %s a %s.
+message.broadcast.stalemate=[MineChess] ¡TABLAS!
+message.broadcast.checkmate=[MineChess] ¡JAQUE MATE!
+message.broadcast.check=[MineChess] ¡JAQUE!
+message.broadcast.puzzleObjectiveBlack=[Puzzle de Ajedrez] Objetivo: Ganan Negras en %s movimiento(s).
+message.broadcast.puzzleObjectiveWhite=[Puzzle de Ajedrez] Objetivo: Ganan Blancas en %s movimiento(s).
+
+message.broadcast.inactiveDraw=[MineChess] No hubo un movimiento activo durante los últimos %s movimientos. Puedes solicitar un Empate escribiendo /draw.
+message.broadcast.samePositionThrice=[MineChess] Esta posición se produjo  %s veces. Puedes solicitar un Empate escribiendo /draw.
+message.broadcast.drawRequestAllowed=[MineChess] %s solicitó un empate. Está permitido así que esto es un ¡Empate!
+message.broadcast.drawRequestRejected=[MineChess] %s solicitó un empate. Esta solicitud fue rechazada.
+    
+message.ai.preTurn.thinking=[IA Ajedrez] Mmm, veamos...
+message.ai.preTurn.tough=[IA Ajedrez] Aquí estoy en una posición difícil...
+message.ai.preTurn.goodMove=[IA Ajedrez] ¡Buen movimiento! Veamos que puedo hacer...
+message.ai.postTurn.yourTurn=[IA Ajedrez] Adelante. Ahora es tu turno.
+message.ai.postTurn.quickMove=[IA Ajedrez] ¡No he tardado mucho tiempo en decidir que hacer!
+message.ai.postTurn.slowMove=[IA Ajedrez] ¡Eso fue difícil de preveer! ¡Me lo estás poniendo realmente complicado!
+message.ai.postTurn.aiGoodMove=[IA Ajedrez] ¡Jaja, toma eso!
+message.ai.postTurn.advantage=[IA Ajedrez] ¡La victoria es mía!
+
+achievement.movePiece=Haciendo un movimiento
+achievement.movePiece.desc=Mueve una pieza de ajedrez.
+achievement.castling=¿Dos a la vez?
+achievement.castling.desc=Haz un movimiento de enroque.
+achievement.enterArena=¡Empecemos a pensar!
+achievement.enterArena.desc=Entra en un puzzle de ajedrez.
+achievement.puzzleFailCreepy=¡Horripilante!
+achievement.puzzleFailCreepy.desc=Falla un puzzle de ajedrez.
+achievement.puzzleFailPotion=¡Drogado!
+achievement.puzzleFailPotion.desc=Falla un puzzle de ajedrez.
+achievement.puzzleFailTransform=¡Transformación!
+achievement.puzzleFailTransform.desc=Falla un puzzle de ajedrez.
+achievement.puzzleFailFire=¡Quémate nene, quémate!
+achievement.puzzleFailFire.desc=Falla un puzzle de ajedrez.
+achievement.enPassant=Pasando por
+achievement.enPassant.desc=Haz una Captura en Paso
+achievement.puzzleWin=Humanos > Ordenadores
+achievement.puzzleWin.desc=Gana un puzzle de ajedrez.
+achievement.stalemate=¡Helado!
+achievement.stalemate.desc=Consigue unas tablas.
+achievement.checkmate=¡JAQUE MATE!
+achievement.checkmate.desc=Gana por un jaque mate.
+achievement.lose=jaque mate...
+achievement.lose.desc=Pierde por un jaque mate.
+achievement.check=¡JAQUE!
+achievement.check.desc=Haz jaque a alguien.

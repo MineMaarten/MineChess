@@ -1,0 +1,94 @@
+item.pieceMover.blackPieceMover.name=Black Piece Mover
+item.pieceMover.whitePieceMover.name=White Piece Mover
+item.pieceMover.chessBoardGenerator.name=Chessboard Generator
+item.pieceMover.chessBoardColumn.name=Chessboard Column
+item.pieceMover.chessAI.name=AI Injector
+
+entity.MineChess.Rook.name=Rook
+entity.MineChess.King.name=King
+entity.MineChess.Pawn.name=Pawn
+entity.MineChess.Knight.name=Knight
+entity.MineChess.Queen.name=Queen
+entity.MineChess.Bishop.name=Bishop
+
+tooltip.selectedWhitePiece=Selected the White %s from %s.
+tooltip.selectedBlackPiece=Selected the Black %s from %s.
+tooltip.noSelectedPiece=-No Piece Selected-
+tooltip.aiInjector=Right click a chess piece of a certain color to turn it into an AI controlled team.
+
+message.error.targetOccupied=[MineChess] You can't generate a chessboard here: There are already pieces at the desired location.
+message.error.computerPiece=[MineChess] This piece is controlled by the computer!
+message.error.notYourPiece=[MineChess] This isn't your piece!
+message.error.pieceCaptured=[MineChess] The selected piece has been captured!
+message.error.aiPuzzle=[MineChess] You can't give pieces AI when they're battling against a Chess puzzle!
+message.error.alreadyAI=[MineChess] This side already is a computer!
+message.error.noPieceMover=[MineChess] You need a piece mover to be able to move pieces!
+message.error.kingInCheck=[MineChess] This move is not valid. Your king is in check!
+message.error.kingCheckCastling=[MineChess] You can't castle here. The King will have to move over in check tiles!
+message.error.blacksTurn=[MineChess] It's black's turn!
+message.error.whitesTurn=[MineChess] It's white's turn!
+message.error.ownPieceInWay=[MineChess] You can't move to here. Your own piece is standing here.
+message.error.movementRuleBlocks=[MineChess] You can't move here. A piece is in between, or a movement rule is blocking this!
+message.error.noChessboardsNearby=[MineChess] There are no chessboards nearby to request a draw from!
+message.error.pawnAwaitingPromotion=[MineChess] A pawn is awaiting promotion! He needs to be promoted before we can move on.
+
+message.error.bugReport.aiWrongMove=[Minechess AI] AI proposed a non valid move. All computer pieces have lost their AI!
+message.error.bugReport.capturedKing=[MineChess]This is a bug! The King never can be captured! Please report the situation back to MineMaarten, found at minecraftforum.net . Thanks in advance.
+
+message.player.youSurrenderWhiteWon=[MineChess] You surrendered! White won!
+message.player.youSurrenderBlackWon=[MineChess] You surrendered! Black won!
+message.player.confirmSurrender=[MineChess] Are you sure you want to surrender? Shift-Rightclick again to confirm.
+message.player.selectPiece=[MineChess] Selected the %s.
+message.player.transformWhiteAI=[MineChess] Transformed the white pieces into computers.
+message.player.transformBlackAI=[MineChess] Transformed the black pieces into computers.
+message.player.movePiece=[MineChess] Moving %s to %s.
+message.broadcast.whiteSurrender=[MineChess] White surrendered!
+message.broadcast.blackSurrender=[MineChess] Black surrendered!
+message.broadcast.moveBlackPiece=[MineChess] Black has moved a %s to %s.
+message.broadcast.moveWhitePiece=[MineChess] White has moved a %s to %s.
+message.broadcast.stalemate=[MineChess] STALEMATE!
+message.broadcast.checkmate=[MineChess] CHECKMATE!
+message.broadcast.check=[MineChess] CHECK!
+message.broadcast.puzzleObjectiveBlack=[Chess Puzzle] Objective: Mate black in %s move(s).
+message.broadcast.puzzleObjectiveWhite=[Chess Puzzle] Objective: Mate white in %s move(s).
+
+message.broadcast.inactiveDraw=[MineChess] There wasn't an active move for the last %s moves. You can request a draw by typing /draw.
+message.broadcast.samePositionThrice=[MineChess] This position occured %s times now. You can request a draw by typing /draw.
+message.broadcast.drawRequestAllowed=[MineChess] A draw was requested by %s. This is allowed, so it's a DRAW!
+message.broadcast.drawRequestRejected=[MineChess] A draw was requested by %s. This request was rejected.
+
+message.ai.preTurn.thinking=[Chess AI] Hmm, let's see...
+message.ai.preTurn.tough=[Chess AI] I'm in a tough position here...
+message.ai.preTurn.goodMove=[Chess AI] Good move! Let's see what I can do...
+message.ai.postTurn.yourTurn=[Chess AI] Go ahead. It's your turn now.
+message.ai.postTurn.quickMove=[Chess AI] That didn't take much time to decide what to do!
+message.ai.postTurn.slowMove=[Chess AI] That was a tough one to figure out! You're making it really hard for me!
+message.ai.postTurn.aiGoodMove=[Chess AI] Haha, take that!
+message.ai.postTurn.advantage=[Chess AI] Victory is mine!
+
+achievement.movePiece=Making a move
+achievement.movePiece.desc=Move a chesspiece.
+achievement.castling=Two at a time?
+achievement.castling.desc=Make a castling movement.
+achievement.enterArena=Let the thinking commence!
+achievement.enterArena.desc=Enter a chess puzzle arena.
+achievement.puzzleFailCreepy=Creepy!
+achievement.puzzleFailCreepy.desc=Fail a chess puzzle.
+achievement.puzzleFailPotion=Drugged!
+achievement.puzzleFailPotion.desc=Fail a chess puzzle.
+achievement.puzzleFailTransform=Transformers!
+achievement.puzzleFailTransform.desc=Fail a chess puzzle.
+achievement.puzzleFailFire=Burn baby burn!
+achievement.puzzleFailFire.desc=Fail a chess puzzle.
+achievement.enPassant=Passing by
+achievement.enPassant.desc=Make an En Passant movement.
+achievement.puzzleWin=Humans > Computers
+achievement.puzzleWin.desc=Win a chess puzzle.
+achievement.stalemate=Freeze!
+achievement.stalemate.desc=Get a stalemate.
+achievement.checkmate=CHECKMATE!
+achievement.checkmate.desc=Win by checkmating.
+achievement.lose=checkmate...
+achievement.lose.desc=Lose by a checkmate.
+achievement.check=CHECK!
+achievement.check.desc=Check someone.
