@@ -305,7 +305,6 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                 } else {
                     if(!handleCastling(player)) {// if the player wasn't able to castle (due to moving the king over an in chess zone)
                         setTargetPosition(oldX, oldZ);
-                        if(player != null) MineChessUtils.sendUnlocalizedMessage(player, "message.error.kingCheckCastling", EnumChatFormatting.RED.toString());
                         return false;
                     }
                     clearEnPassant(); // none of the pawns have jumped two rows at once.
@@ -460,15 +459,31 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
         for(int i = 0; i < pieces.size(); i++) {
             if(pieces.get(i) instanceof EntityRook && isBlack() == pieces.get(i).isBlack()) {
                 if(pieces.get(i).targetX == 0 && targetX == 1) {
+                    targetX = 3;
+                    if(isKingInDanger(isBlack(), false)) {
+                        if(player != null) MineChessUtils.sendUnlocalizedMessage(player, "message.error.kingInCheck", EnumChatFormatting.RED.toString());
+                        return false;// the player can't castle if the king is in check.
+                    }
                     targetX = 2;
-                    if(isKingInDanger(isBlack(), true)) return false;// the player can't move the King over an in check tile.
+                    if(isKingInDanger(isBlack(), true)) {
+                        if(player != null) MineChessUtils.sendUnlocalizedMessage(player, "message.error.kingCheckCastling", EnumChatFormatting.RED.toString());
+                        return false;// the player can't move the King over an in check tile.
+                    }
                     targetX = 1;
                     pieces.get(i).targetX = 2;
                     pieces.get(i).firstMove = false;
                     pieces.get(i).motionY = 0.8D;
                 } else if(pieces.get(i).targetX == 7 && targetX == 5) {
+                    targetX = 3;
+                    if(isKingInDanger(isBlack(), false)) {
+                        if(player != null) MineChessUtils.sendUnlocalizedMessage(player, "message.error.kingInCheck", EnumChatFormatting.RED.toString());
+                        return false;// the player can't castle if the king is in check.
+                    }
                     targetX = 4;
-                    if(isKingInDanger(isBlack(), true)) return false;// the player can't move the King over an in check tile.
+                    if(isKingInDanger(isBlack(), true)) {
+                        if(player != null) MineChessUtils.sendUnlocalizedMessage(player, "message.error.kingCheckCastling", EnumChatFormatting.RED.toString());
+                        return false;// the player can't move the King over an in check tile.
+                    }
                     targetX = 5;
                     pieces.get(i).targetX = 4;
                     pieces.get(i).firstMove = false;
