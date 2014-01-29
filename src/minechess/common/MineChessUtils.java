@@ -65,8 +65,9 @@ public class MineChessUtils{
                     int randZ = z + rand.nextInt(20) - 10;
                     if(randZ >= z - 2 && randZ <= z + 9) randZ += 12;
                     int randY = y + rand.nextInt(6) - 3;
-                    if(world.getBlockId(randX, randY, randZ) == 0 && world.getBlockId(randX, randY + 1, randZ) == 0) {
+                    if(world.isAirBlock(randX, randY, randZ) && world.isAirBlock(randX, randY + 1, randZ)) {
                         EntityCreeper creeper = new EntityCreeper(world);
+
                         creeper.setPosition(randX + 0.5D, randY, randZ + 0.5D);
                         creeper.setTarget(player); // make the creeper already
                                                    // knowing where the player
