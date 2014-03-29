@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import minechess.client.LocalizationHandler;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -27,16 +27,15 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 
 public class ItemPieceMover extends Item{
-    private final Icon[] texture;
+    private final IIcon[] texture;
 
-    public ItemPieceMover(int par1){
-        super(par1);
-        texture = new Icon[5];
+    public ItemPieceMover(){
+        texture = new IIcon[5];
         setHasSubtypes(true);
     }
 
     @Override
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List){
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List){
         for(int i = 0; i < 5; i++)
             par3List.add(new ItemStack(par1, 1, i));
     }
@@ -60,7 +59,7 @@ public class ItemPieceMover extends Item{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister){
+    public void registerIcons(IIconRegister par1IconRegister){
         texture[0] = par1IconRegister.registerIcon("chessMod:blackMover");
         texture[1] = par1IconRegister.registerIcon("chessMod:whiteMover");
         texture[2] = par1IconRegister.registerIcon("chessMod:chessBoard");
@@ -69,7 +68,7 @@ public class ItemPieceMover extends Item{
     }
 
     @Override
-    public Icon getIconFromDamage(int par1){
+    public IIcon getIconFromDamage(int par1){
         if(par1 < 5) return texture[par1];
         return texture[2];
     }
@@ -215,7 +214,7 @@ public class ItemPieceMover extends Item{
             }
         }
         if(!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
-        stack.getTagCompound().setCompoundTag("renderTiles", tileTag);
+        stack.getTagCompound().setTag("renderTiles", tileTag);
     }
 
     public static List<int[]> getRenderTiles(ItemStack stack){

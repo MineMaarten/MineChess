@@ -26,12 +26,12 @@ public class ClientProxyMineChess extends CommonProxyMineChess{
     @Override
     public void registerRenders(){
         super.registerRenders();
-        RenderingRegistry.registerEntityRenderingHandler(EntityRook.class, new RenderRook(new ModelRook(), 0.3F));
-        RenderingRegistry.registerEntityRenderingHandler(EntityKing.class, new RenderKing(new ModelKing(), 0.3F));
-        RenderingRegistry.registerEntityRenderingHandler(EntityPawn.class, new RenderPawn(new ModelPawn(), 0.3F));
-        RenderingRegistry.registerEntityRenderingHandler(EntityKnight.class, new RenderKnight(new ModelKnight(), 0.3F));
-        RenderingRegistry.registerEntityRenderingHandler(EntityQueen.class, new RenderQueen(new ModelQueen(), 0.3F));
-        RenderingRegistry.registerEntityRenderingHandler(EntityBishop.class, new RenderBishop(new ModelBishop(), 0.3F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityRook.class, new RenderChessPiece(new ModelRook(), 0.3F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityKing.class, new RenderChessPiece(new ModelKing(), 0.3F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityPawn.class, new RenderChessPiece(new ModelPawn(), 0.3F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityKnight.class, new RenderChessPiece(new ModelKnight(), 0.3F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityQueen.class, new RenderChessPiece(new ModelQueen(), 0.3F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityBishop.class, new RenderChessPiece(new ModelBishop(), 0.3F));
         RenderingRegistry.registerEntityRenderingHandler(EntityPickyXPOrb.class, new RenderXPOrb());
         MinecraftForge.EVENT_BUS.register(new MineChessDrawBlockHighlightHandler());
 

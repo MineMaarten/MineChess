@@ -3,16 +3,25 @@ package minechess.common;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
+import minechess.common.network.PacketAddChatMessage;
+import minechess.common.network.PacketPlaySound;
+import minechess.common.network.PacketSpawnParticle;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
+
+/**
+ * MineChess
+ * @author MineMaarten
+ * www.minemaarten.com
+ * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
+ */
 
 public class MineChessUtils{
 
@@ -28,13 +37,13 @@ public class MineChessUtils{
         for(int i = 0; i < 8; i++) {
             for(int j = 0; j < 8; j++) {
                 boolean even = (i + j) % 2 == 0;
-                world.setBlock(i + x, y, j + z, Block.cloth.blockID, even ? 0 : 15, 3);
+                world.setBlock(i + x, y, j + z, Blocks.wool, even ? 0 : 15, 3);
             }
         }
     }
 
-    public static void spawnParticle(String particleName, double x, double y, double z, double velX, double velY, double velZ){
-        PacketDispatcher.sendPacketToAllPlayers(PacketHandler.spawnParticle(particleName, x, y, z, velX, velY, velZ));
+    public static void spawnParticle(String particleName, World world, double x, double y, double z, double velX, double velY, double velZ){
+        MineChess.packetPipeline.sendToAllAround(new PacketSpawnParticle(particleName, x, y, z, velX, velY, velZ), world);
     }
 
     public static void onPuzzleFail(World world, EntityPlayer player, EntityBaseChessPiece piece, int x, int y, int z, Random rand){
@@ -48,15 +57,15 @@ public class MineChessUtils{
                 // tiles.
                 for(int i = 0; i < 8; i++) {
                     for(int j = 0; j < 8; j++) {
-                        world.setBlock(x + i, y - 2, z + j, Block.fire.blockID, 1, 3);
+                        world.setBlock(x + i, y - 2, z + j, Blocks.fire, 1, 3);
                     }
                 }
-                if(player != null) AchievementHandler.giveAchievement(player, AchievementHandler.PUZZLE_FAIL_FIRE);
+                if(player != null) AchievementHandler.giveAchievement(player, "puzzleFailFire");
                 return;
             case 1:
                 // play a creepy sound. A maximum of 5 creepers spawn around the
                 // chessboard.
-                PacketDispatcher.sendPacketToAllAround(x, y, z, Constants.PACKET_UPDATE_DISTANCE, world.provider.dimensionId, PacketHandler.playSound(x, y, z, "ambient.cave.cave", 1.0F, 1.0F, true));
+                MineChess.packetPipeline.sendToAllAround(new PacketPlaySound("ambient.cave.cave", x, y, z, 1.0F, 1.0F, true), world);
                 int entityCount = 0;
                 boolean firstCreeper = true;
                 for(int i = 0; i < 50; i++) {
@@ -79,7 +88,7 @@ public class MineChessUtils{
                         if(entityCount >= 5) return;
                     }
                 }
-                if(player != null) AchievementHandler.giveAchievement(player, AchievementHandler.PUZZLE_FAIL_CREEPER);
+                if(player != null) AchievementHandler.giveAchievement(player, "puzzleFailCreepy");
                 return;
             case 2:
                 // Turn every dying enemy chesspiece into mobs.
@@ -87,7 +96,7 @@ public class MineChessUtils{
                 for(EntityBaseChessPiece chessPiece : pieces) {
                     if(chessPiece.isBlack() != piece.isBlack()) chessPiece.turnToMobOnDeath = true;
                 }
-                if(player != null) AchievementHandler.giveAchievement(player, AchievementHandler.PUZZLE_FAIL_TRANSFORM);
+                if(player != null) AchievementHandler.giveAchievement(player, "puzzleFailTransform");
                 return;
             case 3:
                 // give the player random potion effects.
@@ -99,7 +108,7 @@ public class MineChessUtils{
                     } while(!isPotionBadEffect(randomPotion.id) || randomPotion == Potion.harm);
                     player.addPotionEffect(new PotionEffect(randomPotion.id, 200 + rand.nextInt(400))); //make the potion effect last for 10-30 secs.
                 }
-                if(player != null) AchievementHandler.giveAchievement(player, AchievementHandler.PUZZLE_FAIL_POTION);
+                if(player != null) AchievementHandler.giveAchievement(player, "puzzleFailPotion");
                 return;
         }
 
@@ -125,7 +134,7 @@ public class MineChessUtils{
     }
 
     public static void sendUnlocalizedMessage(EntityPlayer player, String message, String... replacements){
-        PacketDispatcher.sendPacketToPlayer(PacketHandler.getChatMessagePacket(message, replacements), (Player)player);
+        MineChess.packetPipeline.sendTo(new PacketAddChatMessage(message, replacements), (EntityPlayerMP)player);
     }
 
 }

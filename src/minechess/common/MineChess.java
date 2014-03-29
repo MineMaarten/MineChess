@@ -3,14 +3,22 @@ package minechess.common;
 import java.io.File;
 
 import minechess.common.ai.Chess;
-import net.minecraft.block.Block;
+import minechess.common.network.PacketAddChatMessage;
+import minechess.common.network.PacketOpenPromotionGUI;
+import minechess.common.network.PacketPieceSelectedUpdate;
+import minechess.common.network.PacketPipeline;
+import minechess.common.network.PacketPlaySound;
+import minechess.common.network.PacketPromotePawn;
+import minechess.common.network.PacketSpawnParticle;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -18,7 +26,6 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -30,21 +37,20 @@ import cpw.mods.fml.common.registry.GameRegistry;
  */
 
 // TODO increase version
-@Mod(modid = "MineChess", name = "MineChess", version = "1.3.6")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"chessMod"}, packetHandler = PacketHandler.class)
+@Mod(modid = Constants.MOD_ID, name = "MineChess", version = "1.3.7")
 public class MineChess{
 
     @SidedProxy(clientSide = "minechess.client.ClientProxyMineChess", serverSide = "minechess.common.CommonProxyMineChess")
     public static CommonProxyMineChess proxy;
 
-    @Instance("MineChess")
+    @Instance(Constants.MOD_ID)
     public static MineChess instance = new MineChess();
+
+    public static PacketPipeline packetPipeline;
 
     public static final boolean DEBUG = false;
 
     public static Item itemPieceMover;
-
-    int ItemPieceMoverID;
 
     public static boolean configRenderMovement;
     public static int configWorldgenPuzzleUnderground;
@@ -72,12 +78,9 @@ public class MineChess{
         propertyAIDepth.comment = "Determines the difficulty of the AI. This can also be changed in-game by using the command \"aidepth <depth>\". The default is quite a challenge and takes about 30 seconds before making a move. Decreasing the number lowers the diffuculty quite severely. Increasing it is also possible, but take more time in account.";
         Chess.maxDepthSetting = propertyAIDepth.getInt();
 
-        // item ID's
-        ItemPieceMoverID = config.getItem("Black/White Piece Mover & Chessboard Generator & Chessboard Column ID", 5090).getInt();
-
         config.save();
 
-        itemPieceMover = new ItemPieceMover(ItemPieceMoverID).setCreativeTab(CreativeTabs.tabTools).setUnlocalizedName("pieceMover");
+        itemPieceMover = new ItemPieceMover().setCreativeTab(CreativeTabs.tabTools).setUnlocalizedName("pieceMover");
         gameRegisters();
         proxy.registerHandlers();
         AchievementHandler.init();
@@ -86,18 +89,26 @@ public class MineChess{
     @EventHandler
     public void load(FMLInitializationEvent event){
         proxy.registerRenders();
+        packetPipeline = new PacketPipeline();
+        packetPipeline.registerPacket(PacketAddChatMessage.class);
+        packetPipeline.registerPacket(PacketOpenPromotionGUI.class);
+        packetPipeline.registerPacket(PacketPlaySound.class);
+        packetPipeline.registerPacket(PacketPromotePawn.class);
+        packetPipeline.registerPacket(PacketPieceSelectedUpdate.class);
+        packetPipeline.registerPacket(PacketSpawnParticle.class);
+        packetPipeline.initialise();
     }
 
     public void gameRegisters(){
-        GameRegistry.registerItem(itemPieceMover, "pieceMover");
+        GameRegistry.registerItem(itemPieceMover, "pieceMover", Constants.MOD_ID);
 
         ItemStack chessColumn = new ItemStack(itemPieceMover, 1, 3);
-        ItemStack blackWool = new ItemStack(Block.cloth.blockID, 1, 15);
-        ItemStack whiteWool = new ItemStack(Block.cloth.blockID, 1, 0);
+        ItemStack blackWool = new ItemStack(Blocks.wool, 1, 15);
+        ItemStack whiteWool = new ItemStack(Blocks.wool, 1, 0);
         // crafting recipes
         // piece movers
         for(int i = 0; i < 2; i++) {
-            GameRegistry.addRecipe(new ItemStack(itemPieceMover, 1, 1 - i), " ww", " ww", "s  ", 'w', new ItemStack(Block.cloth.blockID, 1, i * 15), 's', new ItemStack(Item.stick));
+            GameRegistry.addRecipe(new ItemStack(itemPieceMover, 1, 1 - i), " ww", " ww", "s  ", 'w', new ItemStack(Blocks.wool, 1, i * 15), 's', new ItemStack(Items.stick));
         }
         GameRegistry.addShapelessRecipe(new ItemStack(itemPieceMover, 1, 2), chessColumn, chessColumn, chessColumn, chessColumn, chessColumn, chessColumn, chessColumn, chessColumn);
         GameRegistry.addShapelessRecipe(chessColumn, blackWool, blackWool, blackWool, blackWool, whiteWool, whiteWool, whiteWool, whiteWool);
@@ -114,7 +125,7 @@ public class MineChess{
         EntityRegistry.registerModEntity(EntityPickyXPOrb.class, "Picky XP Orb", 6, this, 80, 1, true);
 
         // worldgenerators
-        GameRegistry.registerWorldGenerator(new WorldGeneratorMineChess());
+        GameRegistry.registerWorldGenerator(new WorldGeneratorMineChess(), 0);
     }
 
     @EventHandler

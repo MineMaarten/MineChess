@@ -3,13 +3,13 @@ package minechess.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import minechess.common.network.PacketOpenPromotionGUI;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
 
 /**
  * MineChess
@@ -84,7 +84,7 @@ public class EntityPawn extends EntityBaseChessPiece{
             worldObj.spawnEntityInWorld(promotedPiece);
             setDead();
             for(int i = 0; i < 40; i++) {
-                MineChessUtils.spawnParticle("explode", posX, posY + rand.nextDouble() * 1.5D, posZ, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D);
+                MineChessUtils.spawnParticle("explode", worldObj, posX, posY + rand.nextDouble() * 1.5D, posZ, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D);
             }
             handleAfterTurn(player);
         }
@@ -92,8 +92,8 @@ public class EntityPawn extends EntityBaseChessPiece{
 
     @Override
     public boolean interact(EntityPlayer player){
-        if(!player.worldObj.isRemote && isPromoting() && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().itemID == MineChess.itemPieceMover.itemID && (player.inventory.getCurrentItem().getItemDamage() == 0 && isBlack() || player.inventory.getCurrentItem().getItemDamage() == 1 && !isBlack())) {
-            PacketDispatcher.sendPacketToPlayer(PacketHandler.openPromotionGUI(this), (Player)player);
+        if(!player.worldObj.isRemote && isPromoting() && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == MineChess.itemPieceMover && (player.inventory.getCurrentItem().getItemDamage() == 0 && isBlack() || player.inventory.getCurrentItem().getItemDamage() == 1 && !isBlack())) {
+            MineChess.packetPipeline.sendTo(new PacketOpenPromotionGUI(this), (EntityPlayerMP)player);
         } else {
             super.interact(player);
         }

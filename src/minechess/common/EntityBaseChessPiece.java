@@ -66,8 +66,8 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
     @Override
     protected void applyEntityAttributes(){
         super.applyEntityAttributes();
-        getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.5D);
-        getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(1.0D);
+        getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.5D);
+        getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(1.0D);
     }
 
     public ResourceLocation getTexture(){
@@ -177,7 +177,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
 
     @Override
     public boolean interact(EntityPlayer player){
-        if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().itemID == MineChess.itemPieceMover.itemID && player.inventory.getCurrentItem().getItemDamage() < 2) {
+        if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() == MineChess.itemPieceMover && player.inventory.getCurrentItem().getItemDamage() < 2) {
 
             EntityBaseChessPiece entitySelected = ItemPieceMover.getEntitySelected(player.worldObj, player.getCurrentEquippedItem());
             if(entitySelected != null && isBlack() ^ entitySelected.isBlack()) {
@@ -212,13 +212,13 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
 
                 if(!worldObj.isRemote) MineChessUtils.sendUnlocalizedMessage(player, "message.player.selectPiece", EnumChatFormatting.DARK_AQUA.toString(), "entity." + EntityList.getEntityString(this) + ".name");
 
-                if(!worldObj.isRemote) updateClient(getValidMoves(), player, entityId);
+                if(!worldObj.isRemote) updateClient(getValidMoves(), player, getEntityId());
                 return false;
             } else {
                 if(!worldObj.isRemote) MineChessUtils.sendUnlocalizedMessage(player, "message.error.notYourPiece", EnumChatFormatting.RED.toString());
             }
             // ItemPieceMover.setEntitySelected(-1, player.getCurrentEquippedItem());
-        } else if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().itemID == MineChess.itemPieceMover.itemID && player.inventory.getCurrentItem().getItemDamage() == 4) {
+        } else if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() == MineChess.itemPieceMover && player.inventory.getCurrentItem().getItemDamage() == 4) {
             if(!computerPiece) {
                 EntityBaseChessPiece enemy = getEnemyPiece();
                 if(enemy != null && enemy.mateInTimes < 0) {
@@ -313,7 +313,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                     if(this instanceof EntityKnight) motionY = 0.8D;
                     if(player != null) {
                         MineChessUtils.sendUnlocalizedMessage(player, "message.player.movePiece", EnumChatFormatting.DARK_GREEN.toString(), "entity." + EntityList.getEntityString(this) + ".name", getColumnName(x) + (z + 1));
-                        AchievementHandler.giveAchievement(player, AchievementHandler.MOVE_PIECE_ID);
+                        AchievementHandler.giveAchievement(player, "movePiece");
                     }
                     sendChatToNearbyPlayers(player, "message.broadcast.move" + (isBlack() ? "BlackPiece" : "WhitePiece"), EnumChatFormatting.DARK_GREEN.toString(), "entity." + EntityList.getEntityString(this) + ".name", getColumnName(x) + (z + 1));
                     if(!isCapturing) {
@@ -347,22 +347,22 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                 if(isKingInDanger(!isBlack(), false)) {
                     if(player != null) {
                         MineChessUtils.sendUnlocalizedMessage(player, "message.broadcast.checkmate", EnumChatFormatting.BLUE.toString());
-                        AchievementHandler.giveAchievement(player, AchievementHandler.CHECKMATE_ID);
+                        AchievementHandler.giveAchievement(player, "checkmate");
                     }
                     for(EntityPlayer nearbyPlayer : getNearbyPlayers())
-                        if(nearbyPlayer != player) AchievementHandler.giveAchievement(nearbyPlayer, AchievementHandler.LOSE_ID);
+                        if(nearbyPlayer != player) AchievementHandler.giveAchievement(nearbyPlayer, "lose");
                     sendChatToNearbyPlayers(player, "message.broadcast.checkmate", EnumChatFormatting.DARK_RED.toString());
                 } else {
                     if(player != null) MineChessUtils.sendUnlocalizedMessage(player, "message.broadcast.stalemate", EnumChatFormatting.BLUE.toString());
                     for(EntityPlayer nearbyPlayer : getNearbyPlayers())
-                        AchievementHandler.giveAchievement(nearbyPlayer, AchievementHandler.STALEMATE_ID);
+                        AchievementHandler.giveAchievement(nearbyPlayer, "stalemate");
                     sendChatToNearbyPlayers(player, "message.broadcast.stalemate", EnumChatFormatting.DARK_RED.toString());
                 }
                 setDeathTimer(isBlack());
             } else if(isKingInDanger(!isBlack(), false)) {
                 if(player != null) {
                     MineChessUtils.sendUnlocalizedMessage(player, "message.broadcast.check", EnumChatFormatting.YELLOW.toString());
-                    AchievementHandler.giveAchievement(player, AchievementHandler.CHECK_ID);
+                    AchievementHandler.giveAchievement(player, "check");
                 }
                 sendChatToNearbyPlayers(player, "message.broadcast.check", EnumChatFormatting.RED.toString());
             }
@@ -420,7 +420,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                     }
                 }
             }
-            if(player != null && deathTimer > 0) AchievementHandler.giveAchievement(player, AchievementHandler.PUZZLE_WIN_ID);
+            if(player != null && deathTimer > 0) AchievementHandler.giveAchievement(player, "puzzleWin");
         }
     }
 
@@ -491,7 +491,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                 }
             }
         }
-        if(player != null && targetX == 5 || targetX == 1) AchievementHandler.giveAchievement(player, AchievementHandler.CASTLING_ID);
+        if(player != null && targetX == 5 || targetX == 1) AchievementHandler.giveAchievement(player, "castling");
         return true;
     }
 
@@ -547,9 +547,9 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                             if(player != null) MineChessUtils.sendUnlocalizedMessage(player, "message.error.ownPieceInWay", EnumChatFormatting.RED.toString());
                             return false;
                         }
-                    } else if(chessPieces.get(j).enPassantPossibility && chessPieces.get(j).targetZ == targetZ && (chessPieces.get(j).targetX == targetX - 1 || chessPieces.get(j).targetX == targetX + 1) && chessPieces.get(j).isBlack() ^ isBlack() && targetX != x && setCaptureIfneccessary) { // passant
+                    } else if(this instanceof EntityPawn && chessPieces.get(j).enPassantPossibility && chessPieces.get(j).targetZ == targetZ && (chessPieces.get(j).targetX == targetX - 1 || chessPieces.get(j).targetX == targetX + 1) && chessPieces.get(j).isBlack() ^ isBlack() && targetX != x && setCaptureIfneccessary) { // passant
                         chessPieces.get(j).kill();
-                        if(player != null) AchievementHandler.giveAchievement(player, AchievementHandler.EN_PASSANT_ID);
+                        if(player != null) AchievementHandler.giveAchievement(player, "enPassant");
                     }
                 }
                 return true;
@@ -743,7 +743,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                 if(turnToMobOnDeath && rand.nextInt(40) == 0) { //indicate the piece is going to transform
                     int iterations = rand.nextInt(3) + 3;
                     for(int i = 0; i < iterations; i++) {
-                        MineChessUtils.spawnParticle("flame", posX, posY + rand.nextDouble() * 1.5D, posZ, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D);
+                        MineChessUtils.spawnParticle("flame", worldObj, posX, posY + rand.nextDouble() * 1.5D, posZ, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D);
                     }
                 }
             } else if(deathTimer == 0) {
@@ -755,7 +755,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                         setDead();
                         worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1009, (int)posX, (int)posY, (int)posZ, 0);
                         for(int i = 0; i < 40; i++) {
-                            MineChessUtils.spawnParticle("flame", posX, posY + rand.nextDouble() * 1.5D, posZ, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D);
+                            MineChessUtils.spawnParticle("flame", worldObj, posX, posY + rand.nextDouble() * 1.5D, posZ, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D);
                         }
                     }
                 } else {

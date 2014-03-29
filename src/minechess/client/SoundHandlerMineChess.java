@@ -1,7 +1,7 @@
 package minechess.client;
 
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
-import net.minecraftforge.event.ForgeSubscribe;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * MineChess
@@ -12,7 +12,7 @@ import net.minecraftforge.event.ForgeSubscribe;
 
 public class SoundHandlerMineChess{
 
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onSound(SoundLoadEvent event){
         try {
             //TODO add sounds

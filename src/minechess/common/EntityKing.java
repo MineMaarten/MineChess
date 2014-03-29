@@ -6,10 +6,10 @@ import java.util.List;
 
 import minechess.common.ai.AIMain;
 import minechess.common.ai.ChessPosition;
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -106,7 +106,7 @@ public class EntityKing extends EntityBaseChessPiece{
             EntityPlayer playerNearby = playersNearby.get(i);
             if(!playersInArea.contains(playerNearby)) {
                 playersInArea.add(playerNearby);
-                AchievementHandler.giveAchievement(playerNearby, AchievementHandler.ENTER_ARENA_ID);
+                AchievementHandler.giveAchievement(playerNearby, "enterArena");
                 MineChessUtils.sendUnlocalizedMessage(playerNearby, "message.broadcast.puzzleObjective" + (isBlack() ? "Black" : "White"), EnumChatFormatting.BLUE.toString(), mateInTimes + "");
             }
         }
@@ -131,9 +131,9 @@ public class EntityKing extends EntityBaseChessPiece{
             int chestY = (int)Math.floor(posY);
             int chestZ = zOffset + targetZ;
             for(int i = 0; i < 40; i++)
-                MineChessUtils.spawnParticle("explode", chestX + 0.5D, chestY + 0.5D, chestZ + 0.5D, rand.nextDouble() / 5 - 0.1D, rand.nextDouble() / 5 - 0.1D, rand.nextDouble() / 5 - 0.1D);
-            worldObj.setBlock(chestX, chestY, chestZ, Block.chest.blockID, 0, 3);
-            TileEntityChest chest = (TileEntityChest)worldObj.getBlockTileEntity(chestX, chestY, chestZ);
+                MineChessUtils.spawnParticle("explode", worldObj, chestX + 0.5D, chestY + 0.5D, chestZ + 0.5D, rand.nextDouble() / 5 - 0.1D, rand.nextDouble() / 5 - 0.1D, rand.nextDouble() / 5 - 0.1D);
+            worldObj.setBlock(chestX, chestY, chestZ, Blocks.chest, 0, 3);
+            TileEntityChest chest = (TileEntityChest)worldObj.getTileEntity(chestX, chestY, chestZ);
             WeightedRandomChestContent.generateChestContents(rand, ChestGenHooks.getItems(ChestGenHooks.MINESHAFT_CORRIDOR, rand), chest, ChestGenHooks.getCount(ChestGenHooks.MINESHAFT_CORRIDOR, rand));
             for(int i = 0; i < 50; i++) {
                 int slot = rand.nextInt(chest.getSizeInventory());
@@ -203,11 +203,11 @@ public class EntityKing extends EntityBaseChessPiece{
         lastPositionScore = tag.getFloat("lastScore");
 
         lastPositions.clear();
-        NBTTagList tagList = tag.getTagList("lastPositions");
+        NBTTagList tagList = tag.getTagList("lastPositions", 9);
         lastPositions.addAll(Arrays.asList(new ChessPosition[tagList.tagCount()])); //reserve a fixed space, so we can fill in this list in sequence.
 
         for(int i = 0; i < tagList.tagCount(); i++) {
-            NBTTagCompound positionTag = (NBTTagCompound)tagList.tagAt(i);
+            NBTTagCompound positionTag = tagList.getCompoundTagAt(i);
             int turn = positionTag.getByte("turn");
 
             if(turn >= 0 && turn < lastPositions.size()) {

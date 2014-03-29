@@ -1,16 +1,17 @@
 package minechess.client;
 
-import minechess.common.MineChessUtils;
 import minechess.common.EntityBaseChessPiece;
 import minechess.common.ItemPieceMover;
 import minechess.common.MineChess;
+import minechess.common.MineChessUtils;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * MineChess
@@ -26,10 +27,10 @@ public class MineChessDrawBlockHighlightHandler{
     private static boolean doInc = true;
     private static float pulseTransparency;
 
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onDrawBlockHighlightEvent(DrawBlockHighlightEvent event){
         if(event.currentItem != null && MineChess.configRenderMovement) {
-            if(event.currentItem.getItem().itemID == MineChess.itemPieceMover.itemID) {
+            if(event.currentItem.getItem() == MineChess.itemPieceMover) {
                 if(event.currentItem.getItemDamage() < 2) {// piece mover
                     EntityBaseChessPiece entitySelected = ItemPieceMover.getEntitySelected(event.player.worldObj, event.currentItem);
                     if(entitySelected != null) {
