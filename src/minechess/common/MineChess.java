@@ -37,7 +37,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
  */
 
 // TODO increase version
-@Mod(modid = Constants.MOD_ID, name = "MineChess", version = "1.3.7")
+@Mod(modid = Constants.MOD_ID, name = "MineChess", version = "1.3.8")
 public class MineChess{
 
     @SidedProxy(clientSide = "minechess.client.ClientProxyMineChess", serverSide = "minechess.common.CommonProxyMineChess")
