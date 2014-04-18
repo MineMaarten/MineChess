@@ -112,7 +112,7 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Abstra
 
     // Method to call from FMLInitializationEvent
     public void initialise(){
-        channels = NetworkRegistry.INSTANCE.newChannel("minesweeper", this);
+        channels = NetworkRegistry.INSTANCE.newChannel("minechess", this);
 
         // Ensures that packet discriminators are common between server and client by using logical sorting
         Collections.sort(packets, new Comparator<Class<? extends AbstractPacket>>(){
