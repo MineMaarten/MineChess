@@ -203,7 +203,7 @@ public class EntityKing extends EntityBaseChessPiece{
         lastPositionScore = tag.getFloat("lastScore");
 
         lastPositions.clear();
-        NBTTagList tagList = tag.getTagList("lastPositions", 9);
+        NBTTagList tagList = tag.getTagList("lastPositions", 10);
         lastPositions.addAll(Arrays.asList(new ChessPosition[tagList.tagCount()])); //reserve a fixed space, so we can fill in this list in sequence.
 
         for(int i = 0; i < tagList.tagCount(); i++) {
