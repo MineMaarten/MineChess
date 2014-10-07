@@ -54,7 +54,7 @@ public class CommandDraw extends CommandBase{
                 }
             }
         } else {
-            EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(icommandsender.getCommandSenderName());
+            EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().func_152612_a(icommandsender.getCommandSenderName());
             if(player != null) {
                 MineChessUtils.sendUnlocalizedMessage(player, "message.error.noChessboardsNearby", EnumChatFormatting.RED.toString());
             }

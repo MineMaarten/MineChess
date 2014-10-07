@@ -109,7 +109,7 @@ public class ItemPieceMover extends Item{
                 case 2:
                     startZ -= 7;
             }
-            AxisAlignedBB bbBox = AxisAlignedBB.getAABBPool().getAABB(startX - 1, y - 1, startZ - 1, startX + 9, y + 2, startZ + 9);
+            AxisAlignedBB bbBox = AxisAlignedBB.getBoundingBox(startX - 1, y - 1, startZ - 1, startX + 9, y + 2, startZ + 9);
             List<EntityBaseChessPiece> pieces = world.getEntitiesWithinAABB(EntityBaseChessPiece.class, bbBox);
             if(pieces.size() > 0) {
                 MineChessUtils.sendUnlocalizedMessage(player, "message.error.targetOccupied", EnumChatFormatting.DARK_RED.toString());

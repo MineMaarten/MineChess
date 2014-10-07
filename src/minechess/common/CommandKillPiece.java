@@ -40,7 +40,7 @@ public class CommandKillPiece extends CommandBase{
             int y = parseInt(icommandsender, astring[1]);
             int z = parseInt(icommandsender, astring[2]);
             boolean isBlack = astring[3].equals("black");
-            AxisAlignedBB bbBox = AxisAlignedBB.getAABBPool().getAABB(x, y - 2, z, x + 1, y + 2, z + 1);
+            AxisAlignedBB bbBox = AxisAlignedBB.getBoundingBox(x, y - 2, z, x + 1, y + 2, z + 1);
             for(WorldServer worldServer : MinecraftServer.getServer().worldServers) {
                 List<EntityBaseChessPiece> pieces = worldServer.getEntitiesWithinAABB(EntityBaseChessPiece.class, bbBox);
                 for(EntityBaseChessPiece piece : pieces) {
@@ -50,7 +50,7 @@ public class CommandKillPiece extends CommandBase{
                     if(piece.isBlack() == isBlack) piece.kill();
                 }
             }
-            notifyAdmins(icommandsender, "Killed any " + astring[3] + " pieces at " + x + ", " + y + ", " + z, new Object[]{0});
+            func_152373_a(icommandsender, this, "Killed any " + astring[3] + " pieces at " + x + ", " + y + ", " + z, new Object[]{0});
         } else {
             throw new WrongUsageException(getCommandUsage(icommandsender), new Object[0]);
         }

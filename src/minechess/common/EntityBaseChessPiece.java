@@ -266,7 +266,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
     }
 
     private List<EntityPlayer> getNearbyPlayers(){
-        AxisAlignedBB bbBox = AxisAlignedBB.getAABBPool().getAABB(xOffset - 5, (int)posY - 5, zOffset - 5, xOffset + 13, posY + 8, zOffset + 13);
+        AxisAlignedBB bbBox = AxisAlignedBB.getBoundingBox(xOffset - 5, (int)posY - 5, zOffset - 5, xOffset + 13, posY + 8, zOffset + 13);
         return worldObj.getEntitiesWithinAABB(EntityPlayer.class, bbBox);
     }
 
@@ -704,7 +704,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
      * @return
      */
     public List<EntityBaseChessPiece> getChessPieces(boolean filterToBeCapturedPieces){
-        AxisAlignedBB bbBox = AxisAlignedBB.getAABBPool().getAABB(xOffset - 1, (int)posY - 1, zOffset - 1, xOffset + 8, posY + 2, zOffset + 8);
+        AxisAlignedBB bbBox = AxisAlignedBB.getBoundingBox(xOffset - 1, (int)posY - 1, zOffset - 1, xOffset + 8, posY + 2, zOffset + 8);
         List<EntityBaseChessPiece> pieces = worldObj.getEntitiesWithinAABB(EntityBaseChessPiece.class, bbBox);
         filterPieces(pieces, filterToBeCapturedPieces);
         return pieces;

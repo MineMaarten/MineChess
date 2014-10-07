@@ -114,12 +114,12 @@ public class EntityKing extends EntityBaseChessPiece{
     }
 
     public List<EntityPlayer> getNearbyPlayers(){
-        AxisAlignedBB bbBox = AxisAlignedBB.getAABBPool().getAABB(xOffset - 1, (int)posY - 1, zOffset - 1, xOffset + 8, posY + 2, zOffset + 8);
+        AxisAlignedBB bbBox = AxisAlignedBB.getBoundingBox(xOffset - 1, (int)posY - 1, zOffset - 1, xOffset + 8, posY + 2, zOffset + 8);
         return worldObj.getEntitiesWithinAABB(EntityPlayer.class, bbBox);
     }
 
     public List<EntityPlayer> getNotSoNearbyPlayers(){
-        AxisAlignedBB bbBox = AxisAlignedBB.getAABBPool().getAABB(xOffset - 3, (int)posY - 2, zOffset - 3, xOffset + 10, posY + 4, zOffset + 10);
+        AxisAlignedBB bbBox = AxisAlignedBB.getBoundingBox(xOffset - 3, (int)posY - 2, zOffset - 3, xOffset + 10, posY + 4, zOffset + 10);
         return worldObj.getEntitiesWithinAABB(EntityPlayer.class, bbBox);
 
     }

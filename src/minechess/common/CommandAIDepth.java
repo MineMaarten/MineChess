@@ -36,7 +36,7 @@ public class CommandAIDepth extends CommandBase{
             Chess.maxDepthSetting = newDepth;
             MineChess.propertyAIDepth.set(newDepth);
             MineChess.config.save();
-            notifyAdmins(icommandsender, String.format("Set MineChess AI search depth to %s", newDepth), new Object[]{Integer.valueOf(newDepth)}); // LanguageRegistry.instance().getStringLocalization("message.command.setAIDepth")
+            func_152373_a(icommandsender, this, String.format("Set MineChess AI search depth to %s", newDepth), new Object[]{Integer.valueOf(newDepth)}); // LanguageRegistry.instance().getStringLocalization("message.command.setAIDepth")
         } else {
             throw new WrongUsageException(getCommandUsage(icommandsender), new Object[0]);
         }
