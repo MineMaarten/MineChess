@@ -40,7 +40,7 @@ public class MineChess{
     @Instance(Constants.MOD_ID)
     public static MineChess instance = new MineChess();
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     public static Item itemPieceMover;
 
