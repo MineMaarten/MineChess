@@ -5,13 +5,12 @@ import minechess.common.ItemPieceMover;
 import minechess.common.MineChess;
 import minechess.common.MineChessUtils;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * MineChess
@@ -44,11 +43,11 @@ public class MineChessDrawBlockHighlightHandler{
                             }
                         }
                     }
-                } else if(event.currentItem.getItemDamage() == 2) {// board generator
+                } else if(event.currentItem.getItemDamage() == 2 && event.target.getBlockPos() != null) {// board generator
                     pulseTransparency = getPulseValue() * 0.75F / 3000f;
                     int orientation = MineChessUtils.determineOrientation(event.player);
-                    int startX = event.target.blockX;
-                    int startZ = event.target.blockZ;
+                    int startX = event.target.getBlockPos().getX();
+                    int startZ = event.target.getBlockPos().getZ();
                     switch(orientation){
                         case 0:
                             startX -= 7;
@@ -64,7 +63,7 @@ public class MineChessDrawBlockHighlightHandler{
 
                     for(int i = 0; i < 8; i++) {
                         for(int j = 0; j < 8; j++) {
-                            highlightTile(event.player, startX + i, event.target.blockY, startZ + j, event.partialTicks);
+                            highlightTile(event.player, startX + i, event.target.getBlockPos().getY(), startZ + j, event.partialTicks);
                         }
                     }
                 }
@@ -92,12 +91,11 @@ public class MineChessDrawBlockHighlightHandler{
         GL11.glDisable(GL11.GL_CULL_FACE);
 
         for(int i = 4; i < 5; i++) {
-            ForgeDirection forgeDir = ForgeDirection.getOrientation(i);
             int zCorrection = i == 2 ? -1 : 1;
             GL11.glPushMatrix();
             GL11.glTranslated(-iPX + x + xShift, -iPY + y + yShift, -iPZ + z + zShift);
             GL11.glScalef(1F * xScale, 1F * yScale, 1F * zScale);
-            GL11.glRotatef(90, forgeDir.offsetX, forgeDir.offsetY, forgeDir.offsetZ);
+            GL11.glRotatef(90, -1, 0, 0);
             GL11.glTranslated(0, 0, 0.5f * zCorrection);
             GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
             drawQuad(-0.5F, -0.5F, 1F, 1F, 0F);
@@ -136,13 +134,13 @@ public class MineChessDrawBlockHighlightHandler{
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(0F, 1F, 0F, pulseTransparency);
 
-        Tessellator tessellator = Tessellator.instance;
+        WorldRenderer tessellator = Tessellator.getInstance().getWorldRenderer();
         tessellator.startDrawingQuads();
         tessellator.addVertex(x + 0F, y + height, zLevel);
         tessellator.addVertex(x + width, y + height, zLevel);
         tessellator.addVertex(x + width, y + 0F, zLevel);
         tessellator.addVertex(x + 0F, y + 0F, zLevel);
-        tessellator.draw();
+        Tessellator.getInstance().draw();
 
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glEnable(GL11.GL_TEXTURE_2D);

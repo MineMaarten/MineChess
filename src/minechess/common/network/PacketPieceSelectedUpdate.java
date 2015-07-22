@@ -1,7 +1,6 @@
 package minechess.common.network;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 
-public class PacketPieceSelectedUpdate extends AbstractPacket{
+public class PacketPieceSelectedUpdate extends AbstractPacket<PacketPieceSelectedUpdate>{
 
     private List<int[]> renderPositions;
     private int pieceEntityID, renderHeight;
@@ -32,7 +31,7 @@ public class PacketPieceSelectedUpdate extends AbstractPacket{
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer){
+    public void toBytes(ByteBuf buffer){
         buffer.writeByte(renderPositions.size());
         for(int[] position : renderPositions) {
             buffer.writeInt(position[0]);
@@ -43,7 +42,7 @@ public class PacketPieceSelectedUpdate extends AbstractPacket{
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer){
+    public void fromBytes(ByteBuf buffer){
         renderPositions = new ArrayList<int[]>();
         int listSize = buffer.readInt();
         for(int i = 0; i < listSize; i++) {
@@ -57,16 +56,16 @@ public class PacketPieceSelectedUpdate extends AbstractPacket{
     }
 
     @Override
-    public void handleClientSide(EntityPlayer player){
+    public void handleClientSide(PacketPieceSelectedUpdate message, EntityPlayer player){
         MineChessDrawBlockHighlightHandler.pulse = 0;
 
         if(player.getCurrentEquippedItem().getItem() == MineChess.itemPieceMover) {
-            ItemPieceMover.setRenderTiles(renderPositions, renderHeight, player.getCurrentEquippedItem());
-            ItemPieceMover.setEntitySelected(pieceEntityID, player.getCurrentEquippedItem());
+            ItemPieceMover.setRenderTiles(message.renderPositions, message.renderHeight, player.getCurrentEquippedItem());
+            ItemPieceMover.setEntitySelected(message.pieceEntityID, player.getCurrentEquippedItem());
         }
     }
 
     @Override
-    public void handleServerSide(EntityPlayer player){}
+    public void handleServerSide(PacketPieceSelectedUpdate message, EntityPlayer player){}
 
 }

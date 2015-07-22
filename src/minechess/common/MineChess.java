@@ -3,13 +3,7 @@ package minechess.common;
 import java.io.File;
 
 import minechess.common.ai.Chess;
-import minechess.common.network.PacketAddChatMessage;
-import minechess.common.network.PacketOpenPromotionGUI;
-import minechess.common.network.PacketPieceSelectedUpdate;
-import minechess.common.network.PacketPipeline;
-import minechess.common.network.PacketPlaySound;
-import minechess.common.network.PacketPromotePawn;
-import minechess.common.network.PacketSpawnParticle;
+import minechess.common.network.NetworkHandler;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -19,15 +13,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * MineChess
@@ -46,9 +40,7 @@ public class MineChess{
     @Instance(Constants.MOD_ID)
     public static MineChess instance = new MineChess();
 
-    public static PacketPipeline packetPipeline;
-
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 
     public static Item itemPieceMover;
 
@@ -89,14 +81,7 @@ public class MineChess{
     @EventHandler
     public void load(FMLInitializationEvent event){
         proxy.registerRenders();
-        packetPipeline = new PacketPipeline();
-        packetPipeline.registerPacket(PacketAddChatMessage.class);
-        packetPipeline.registerPacket(PacketOpenPromotionGUI.class);
-        packetPipeline.registerPacket(PacketPlaySound.class);
-        packetPipeline.registerPacket(PacketPromotePawn.class);
-        packetPipeline.registerPacket(PacketPieceSelectedUpdate.class);
-        packetPipeline.registerPacket(PacketSpawnParticle.class);
-        packetPipeline.initialise();
+        NetworkHandler.init();
     }
 
     public void gameRegisters(){

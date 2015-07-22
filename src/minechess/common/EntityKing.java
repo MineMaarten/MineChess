@@ -15,7 +15,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ChestGenHooks;
@@ -114,12 +116,12 @@ public class EntityKing extends EntityBaseChessPiece{
     }
 
     public List<EntityPlayer> getNearbyPlayers(){
-        AxisAlignedBB bbBox = AxisAlignedBB.getBoundingBox(xOffset - 1, (int)posY - 1, zOffset - 1, xOffset + 8, posY + 2, zOffset + 8);
+        AxisAlignedBB bbBox = new AxisAlignedBB(xOffset - 1, (int)posY - 1, zOffset - 1, xOffset + 8, posY + 2, zOffset + 8);
         return worldObj.getEntitiesWithinAABB(EntityPlayer.class, bbBox);
     }
 
     public List<EntityPlayer> getNotSoNearbyPlayers(){
-        AxisAlignedBB bbBox = AxisAlignedBB.getBoundingBox(xOffset - 3, (int)posY - 2, zOffset - 3, xOffset + 10, posY + 4, zOffset + 10);
+        AxisAlignedBB bbBox = new AxisAlignedBB(xOffset - 3, (int)posY - 2, zOffset - 3, xOffset + 10, posY + 4, zOffset + 10);
         return worldObj.getEntitiesWithinAABB(EntityPlayer.class, bbBox);
 
     }
@@ -131,9 +133,9 @@ public class EntityKing extends EntityBaseChessPiece{
             int chestY = (int)Math.floor(posY);
             int chestZ = zOffset + targetZ;
             for(int i = 0; i < 40; i++)
-                MineChessUtils.spawnParticle("explode", worldObj, chestX + 0.5D, chestY + 0.5D, chestZ + 0.5D, rand.nextDouble() / 5 - 0.1D, rand.nextDouble() / 5 - 0.1D, rand.nextDouble() / 5 - 0.1D);
-            worldObj.setBlock(chestX, chestY, chestZ, Blocks.chest, 0, 3);
-            TileEntityChest chest = (TileEntityChest)worldObj.getTileEntity(chestX, chestY, chestZ);
+                MineChessUtils.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, worldObj, chestX + 0.5D, chestY + 0.5D, chestZ + 0.5D, rand.nextDouble() / 5 - 0.1D, rand.nextDouble() / 5 - 0.1D, rand.nextDouble() / 5 - 0.1D);
+            worldObj.setBlockState(new BlockPos(chestX, chestY, chestZ), Blocks.chest.getDefaultState());
+            TileEntityChest chest = (TileEntityChest)worldObj.getTileEntity(new BlockPos(chestX, chestY, chestZ));
             WeightedRandomChestContent.generateChestContents(rand, ChestGenHooks.getItems(ChestGenHooks.MINESHAFT_CORRIDOR, rand), chest, ChestGenHooks.getCount(ChestGenHooks.MINESHAFT_CORRIDOR, rand));
             for(int i = 0; i < 50; i++) {
                 int slot = rand.nextInt(chest.getSizeInventory());

@@ -1,12 +1,11 @@
 package minechess.common.network;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import minechess.client.GuiPawnPromotion;
 import minechess.common.EntityPawn;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import cpw.mods.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 /**
  * MineChess
@@ -15,7 +14,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 
-public class PacketOpenPromotionGUI extends AbstractPacket{
+public class PacketOpenPromotionGUI extends AbstractPacket<PacketOpenPromotionGUI>{
     private int pawnEntityID;
 
     public PacketOpenPromotionGUI(){}
@@ -25,24 +24,24 @@ public class PacketOpenPromotionGUI extends AbstractPacket{
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer){
+    public void toBytes(ByteBuf buffer){
         buffer.writeInt(pawnEntityID);
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer){
+    public void fromBytes(ByteBuf buffer){
         pawnEntityID = buffer.readInt();
     }
 
     @Override
-    public void handleClientSide(EntityPlayer player){
-        Entity entity = player.worldObj.getEntityByID(pawnEntityID);
+    public void handleClientSide(PacketOpenPromotionGUI message, EntityPlayer player){
+        Entity entity = player.worldObj.getEntityByID(message.pawnEntityID);
         if(entity instanceof EntityPawn) {
             FMLCommonHandler.instance().showGuiScreen(new GuiPawnPromotion((EntityPawn)entity));
         }
     }
 
     @Override
-    public void handleServerSide(EntityPlayer player){}
+    public void handleServerSide(PacketOpenPromotionGUI message, EntityPlayer player){}
 
 }

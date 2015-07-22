@@ -1,10 +1,9 @@
 package minechess.common.network;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import minechess.common.Constants;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 /**
  * MineChess
@@ -13,7 +12,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  */
 
-public abstract class LocationDoublePacket extends AbstractPacket{
+public abstract class LocationDoublePacket<REQ extends IMessage> extends AbstractPacket<REQ>{
 
     protected double x, y, z;
 
@@ -26,24 +25,24 @@ public abstract class LocationDoublePacket extends AbstractPacket{
     }
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer){
-        buffer.writeDouble(x);
-        buffer.writeDouble(y);
-        buffer.writeDouble(z);
+    public void toBytes(ByteBuf buf){
+        buf.writeDouble(x);
+        buf.writeDouble(y);
+        buf.writeDouble(z);
     }
 
     @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer){
-        x = buffer.readDouble();
-        y = buffer.readDouble();
-        z = buffer.readDouble();
+    public void fromBytes(ByteBuf buf){
+        x = buf.readDouble();
+        y = buf.readDouble();
+        z = buf.readDouble();
     }
 
     public NetworkRegistry.TargetPoint getTargetPoint(World world){
-        return getTargetPoint(world, Constants.PACKET_UPDATE_DISTANCE);
+        return getTargetPoint(world, 64);
     }
 
     public NetworkRegistry.TargetPoint getTargetPoint(World world, double updateDistance){
-        return new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, y, z, updateDistance);
+        return new NetworkRegistry.TargetPoint(world.provider.getDimensionId(), x, y, z, updateDistance);
     }
 }

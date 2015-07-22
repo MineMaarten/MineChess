@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import minechess.client.LocalizationHandler;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -13,11 +12,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * MineChess
@@ -27,10 +25,8 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 
 public class ItemPieceMover extends Item{
-    private final IIcon[] texture;
 
     public ItemPieceMover(){
-        texture = new IIcon[5];
         setHasSubtypes(true);
     }
 
@@ -58,29 +54,13 @@ public class ItemPieceMover extends Item{
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister par1IconRegister){
-        texture[0] = par1IconRegister.registerIcon("chessMod:blackMover");
-        texture[1] = par1IconRegister.registerIcon("chessMod:whiteMover");
-        texture[2] = par1IconRegister.registerIcon("chessMod:chessBoard");
-        texture[3] = par1IconRegister.registerIcon("chessMod:chessBoardColumn");
-        texture[4] = par1IconRegister.registerIcon("chessMod:AIInjector");
-    }
-
-    @Override
-    public IIcon getIconFromDamage(int par1){
-        if(par1 < 5) return texture[par1];
-        return texture[2];
-    }
-
-    @Override
-    public boolean onItemUse(ItemStack iStack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10){
+    public boolean onItemUse(ItemStack iStack, EntityPlayer player, World world, BlockPos pos, EnumFacing facing, float par8, float par9, float par10){
         if(iStack.getItemDamage() < 2) {
             EntityBaseChessPiece entitySelected = getEntitySelected(world, iStack);
             if(entitySelected != null && !entitySelected.isDead && !world.isRemote) {
                 try {
                     if(!entitySelected.getEnemyPiece().computerPiece) entitySelected.setLosingPlayer(player, entitySelected.isBlack());
-                    entitySelected.tryToGoTo(x - entitySelected.xOffset, z - entitySelected.zOffset, player);
+                    entitySelected.tryToGoTo(pos.getX() - entitySelected.xOffset, pos.getZ() - entitySelected.zOffset, player);
                 } catch(Exception e) {
                     System.err.println("An unknown exception has been thrown with MineChess. Here's a stacktrace: ");
                     e.printStackTrace();
@@ -96,8 +76,8 @@ public class ItemPieceMover extends Item{
         } else if(iStack.getItemDamage() == 2) {
             if(world.isRemote) return false;
             int orientation = MineChessUtils.determineOrientation(player);
-            int startX = x;
-            int startZ = z;
+            int startX = pos.getX();
+            int startZ = pos.getZ();
             switch(orientation){
                 case 0:
                     startX -= 7;
@@ -109,15 +89,15 @@ public class ItemPieceMover extends Item{
                 case 2:
                     startZ -= 7;
             }
-            AxisAlignedBB bbBox = AxisAlignedBB.getBoundingBox(startX - 1, y - 1, startZ - 1, startX + 9, y + 2, startZ + 9);
+            AxisAlignedBB bbBox = new AxisAlignedBB(startX - 1, pos.getY() - 1, startZ - 1, startX + 9, pos.getY() + 2, startZ + 9);
             List<EntityBaseChessPiece> pieces = world.getEntitiesWithinAABB(EntityBaseChessPiece.class, bbBox);
             if(pieces.size() > 0) {
                 MineChessUtils.sendUnlocalizedMessage(player, "message.error.targetOccupied", EnumChatFormatting.DARK_RED.toString());
                 return false;
             }
 
-            generateChessEntities(world, startX, y, startZ, false);
-            MineChessUtils.generateChessBoard(world, startX, y, startZ);
+            generateChessEntities(world, startX, pos.getY(), startZ, false);
+            MineChessUtils.generateChessBoard(world, startX, pos.getY(), startZ);
             iStack.stackSize--;
             return true;
         }

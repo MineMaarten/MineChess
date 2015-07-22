@@ -1,47 +1,35 @@
 package minechess.common.network;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
 
-/**
- * MineChess
- * @author MineMaarten
- * www.minemaarten.com
- * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
- *
- * AbstractPacket class. Should be the parent of all packets wishing to use the PacketPipeline.
- * @author sirgingalot
- */
-public abstract class AbstractPacket{
+public abstract class AbstractPacket<REQ extends IMessage> implements IMessage, IMessageHandler<REQ, REQ>{
 
-    /**
-     * Encode the packet data into the ByteBuf stream. Complex data sets may need specific data handlers (See @link{cpw.mods.fml.common.network.ByteBuffUtils})
-     *
-     * @param ctx    channel context
-     * @param buffer the buffer to encode into
-     */
-    public abstract void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer);
-
-    /**
-     * Decode the packet data from the ByteBuf stream. Complex data sets may need specific data handlers (See @link{cpw.mods.fml.common.network.ByteBuffUtils})
-     *
-     * @param ctx    channel context
-     * @param buffer the buffer to decode from
-     */
-    public abstract void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer);
+    @Override
+    public REQ onMessage(REQ message, MessageContext ctx){
+        if(ctx.side == Side.SERVER) {
+            handleServerSide(message, ctx.getServerHandler().playerEntity);
+        } else {
+            handleClientSide(message, FMLClientHandler.instance().getClientPlayerEntity());
+        }
+        return null;
+    }
 
     /**
      * Handle a packet on the client side. Note this occurs after decoding has completed.
-     *
+     * @param message
      * @param player the player reference
      */
-    public abstract void handleClientSide(EntityPlayer player);
+    public abstract void handleClientSide(REQ message, EntityPlayer player);
 
     /**
      * Handle a packet on the server side. Note this occurs after decoding has completed.
-     *
+     * @param message
      * @param player the player reference
      */
-    public abstract void handleServerSide(EntityPlayer player);
+    public abstract void handleServerSide(REQ message, EntityPlayer player);
 }

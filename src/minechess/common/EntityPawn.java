@@ -3,12 +3,14 @@ package minechess.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import minechess.common.network.NetworkHandler;
 import minechess.common.network.PacketOpenPromotionGUI;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 /**
@@ -84,7 +86,7 @@ public class EntityPawn extends EntityBaseChessPiece{
             worldObj.spawnEntityInWorld(promotedPiece);
             setDead();
             for(int i = 0; i < 40; i++) {
-                MineChessUtils.spawnParticle("explode", worldObj, posX, posY + rand.nextDouble() * 1.5D, posZ, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D);
+                MineChessUtils.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, worldObj, posX, posY + rand.nextDouble() * 1.5D, posZ, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D);
             }
             handleAfterTurn(player);
         }
@@ -93,7 +95,7 @@ public class EntityPawn extends EntityBaseChessPiece{
     @Override
     public boolean interact(EntityPlayer player){
         if(!player.worldObj.isRemote && isPromoting() && player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == MineChess.itemPieceMover && (player.inventory.getCurrentItem().getItemDamage() == 0 && isBlack() || player.inventory.getCurrentItem().getItemDamage() == 1 && !isBlack())) {
-            MineChess.packetPipeline.sendTo(new PacketOpenPromotionGUI(this), (EntityPlayerMP)player);
+            NetworkHandler.sendTo(new PacketOpenPromotionGUI(this), (EntityPlayerMP)player);
         } else {
             super.interact(player);
         }

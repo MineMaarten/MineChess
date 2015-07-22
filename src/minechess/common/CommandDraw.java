@@ -3,11 +3,12 @@ package minechess.common;
 import java.util.List;
 
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
 
 /**
@@ -20,7 +21,7 @@ import net.minecraft.util.EnumChatFormatting;
 public class CommandDraw extends CommandBase{
 
     @Override
-    public String getCommandName(){
+    public String getName(){
         return "draw";
     }
 
@@ -35,9 +36,9 @@ public class CommandDraw extends CommandBase{
     }
 
     @Override
-    public void processCommand(ICommandSender icommandsender, String[] astring){
-        ChunkCoordinates coords = icommandsender.getPlayerCoordinates();
-        AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(coords.posX - 2, coords.posY - 2, coords.posZ - 2, coords.posX + 2, coords.posY + 2, coords.posZ);
+    public void execute(ICommandSender icommandsender, String[] astring) throws CommandException{
+        BlockPos coords = icommandsender.getPosition();
+        AxisAlignedBB aabb = new AxisAlignedBB(coords.getX() - 2, coords.getY() - 2, coords.getZ() - 2, coords.getX() + 2, coords.getY() + 2, coords.getZ());
         List<EntityBaseChessPiece> pieces = icommandsender.getEntityWorld().getEntitiesWithinAABB(EntityBaseChessPiece.class, aabb);
         if(pieces.size() > 0) {
             pieces = pieces.get(0).getChessPieces(true);
@@ -46,15 +47,15 @@ public class CommandDraw extends CommandBase{
                     EntityKing king = (EntityKing)piece;
                     if(king.checkForDraw(false)) {
                         king.setDeathTimer(true);
-                        king.sendChatToNearbyPlayers(null, "message.broadcast.drawRequestAllowed", EnumChatFormatting.GOLD.toString(), icommandsender.getCommandSenderName());
+                        king.sendChatToNearbyPlayers(null, "message.broadcast.drawRequestAllowed", EnumChatFormatting.GOLD.toString(), icommandsender.getName());
                     } else {
-                        king.sendChatToNearbyPlayers(null, "message.broadcast.drawRequestRejected", EnumChatFormatting.GOLD.toString(), icommandsender.getCommandSenderName());
+                        king.sendChatToNearbyPlayers(null, "message.broadcast.drawRequestRejected", EnumChatFormatting.GOLD.toString(), icommandsender.getName());
                     }
                     return;
                 }
             }
         } else {
-            EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().func_152612_a(icommandsender.getCommandSenderName());
+            EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(icommandsender.getName());
             if(player != null) {
                 MineChessUtils.sendUnlocalizedMessage(player, "message.error.noChessboardsNearby", EnumChatFormatting.RED.toString());
             }

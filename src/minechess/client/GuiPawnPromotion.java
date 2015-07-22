@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import minechess.common.EntityPawn;
-import minechess.common.MineChess;
+import minechess.common.network.NetworkHandler;
 import minechess.common.network.PacketPromotePawn;
-import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.FMLClientHandler;
 
 /**
  * MineChess
@@ -49,10 +49,10 @@ public class GuiPawnPromotion extends GuiScreen{
 
     @Override
     public void actionPerformed(GuiButton button){
-        EntityClientPlayerMP player = FMLClientHandler.instance().getClient().thePlayer;
+        EntityPlayerSP player = FMLClientHandler.instance().getClient().thePlayer;
         if(player != null) {
             player.closeScreen();
         }
-        MineChess.packetPipeline.sendToServer(new PacketPromotePawn(promotedPawn, promotedPieces.get(button.id)));
+        NetworkHandler.sendToServer(new PacketPromotePawn(promotedPawn, promotedPieces.get(button.id)));
     }
 }

@@ -12,8 +12,10 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -75,9 +77,8 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
         return RESOURCE_WHITE_PIECE;
     }
 
-    @Override
-    public void updateEntityActionState(){
-        // don't move
+    protected boolean canDespawn(){
+        return false;
     }
 
     @Override
@@ -266,7 +267,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
     }
 
     private List<EntityPlayer> getNearbyPlayers(){
-        AxisAlignedBB bbBox = AxisAlignedBB.getBoundingBox(xOffset - 5, (int)posY - 5, zOffset - 5, xOffset + 13, posY + 8, zOffset + 13);
+        AxisAlignedBB bbBox = new AxisAlignedBB(xOffset - 5, (int)posY - 5, zOffset - 5, xOffset + 13, posY + 8, zOffset + 13);
         return worldObj.getEntitiesWithinAABB(EntityPlayer.class, bbBox);
     }
 
@@ -704,7 +705,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
      * @return
      */
     public List<EntityBaseChessPiece> getChessPieces(boolean filterToBeCapturedPieces){
-        AxisAlignedBB bbBox = AxisAlignedBB.getBoundingBox(xOffset - 1, (int)posY - 1, zOffset - 1, xOffset + 8, posY + 2, zOffset + 8);
+        AxisAlignedBB bbBox = new AxisAlignedBB(xOffset - 1, (int)posY - 1, zOffset - 1, xOffset + 8, posY + 2, zOffset + 8);
         List<EntityBaseChessPiece> pieces = worldObj.getEntitiesWithinAABB(EntityBaseChessPiece.class, bbBox);
         filterPieces(pieces, filterToBeCapturedPieces);
         return pieces;
@@ -743,7 +744,7 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                 if(turnToMobOnDeath && rand.nextInt(40) == 0) { //indicate the piece is going to transform
                     int iterations = rand.nextInt(3) + 3;
                     for(int i = 0; i < iterations; i++) {
-                        MineChessUtils.spawnParticle("flame", worldObj, posX, posY + rand.nextDouble() * 1.5D, posZ, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D);
+                        MineChessUtils.spawnParticle(EnumParticleTypes.FLAME, worldObj, posX, posY + rand.nextDouble() * 1.5D, posZ, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D);
                     }
                 }
             } else if(deathTimer == 0) {
@@ -753,9 +754,9 @@ public abstract class EntityBaseChessPiece extends EntityLiving{
                         mob.setPosition(posX, posY, posZ);
                         worldObj.spawnEntityInWorld(mob);
                         setDead();
-                        worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1009, (int)posX, (int)posY, (int)posZ, 0);
+                        worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1009, new BlockPos(posX, posY, posZ), 0);
                         for(int i = 0; i < 40; i++) {
-                            MineChessUtils.spawnParticle("flame", worldObj, posX, posY + rand.nextDouble() * 1.5D, posZ, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D);
+                            MineChessUtils.spawnParticle(EnumParticleTypes.FLAME, worldObj, posX, posY + rand.nextDouble() * 1.5D, posZ, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D, rand.nextDouble() / 10 - 0.05D);
                         }
                     }
                 } else {

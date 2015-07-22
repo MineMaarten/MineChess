@@ -3,16 +3,20 @@ package minechess.common;
 import java.util.List;
 import java.util.Random;
 
+import minechess.common.network.NetworkHandler;
 import minechess.common.network.PacketAddChatMessage;
-import minechess.common.network.PacketPlaySound;
 import minechess.common.network.PacketSpawnParticle;
+import net.minecraft.block.BlockColored;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -37,13 +41,13 @@ public class MineChessUtils{
         for(int i = 0; i < 8; i++) {
             for(int j = 0; j < 8; j++) {
                 boolean even = (i + j) % 2 == 0;
-                world.setBlock(i + x, y, j + z, Blocks.wool, even ? 0 : 15, 3);
+                world.setBlockState(new BlockPos(i + x, y, j + z), Blocks.wool.getDefaultState().withProperty(BlockColored.COLOR, even ? EnumDyeColor.WHITE : EnumDyeColor.BLACK));
             }
         }
     }
 
-    public static void spawnParticle(String particleName, World world, double x, double y, double z, double velX, double velY, double velZ){
-        MineChess.packetPipeline.sendToAllAround(new PacketSpawnParticle(particleName, x, y, z, velX, velY, velZ), world);
+    public static void spawnParticle(EnumParticleTypes particle, World world, double x, double y, double z, double velX, double velY, double velZ){
+        NetworkHandler.sendToAllAround(new PacketSpawnParticle(particle, x, y, z, velX, velY, velZ), world);
     }
 
     public static void onPuzzleFail(World world, EntityPlayer player, EntityBaseChessPiece piece, int x, int y, int z, Random rand){
@@ -57,7 +61,7 @@ public class MineChessUtils{
                 // tiles.
                 for(int i = 0; i < 8; i++) {
                     for(int j = 0; j < 8; j++) {
-                        world.setBlock(x + i, y - 2, z + j, Blocks.fire, 1, 3);
+                        world.setBlockState(new BlockPos(x + i, y - 2, z + j), Blocks.fire.getDefaultState());
                     }
                 }
                 if(player != null) AchievementHandler.giveAchievement(player, "puzzleFailFire");
@@ -65,7 +69,8 @@ public class MineChessUtils{
             case 1:
                 // play a creepy sound. A maximum of 5 creepers spawn around the
                 // chessboard.
-                MineChess.packetPipeline.sendToAllAround(new PacketPlaySound("ambient.cave.cave", x, y, z, 1.0F, 1.0F, true), world);
+                //  NetworkHandler.sendToAllAround(new PacketPlaySound("ambient.cave.cave", x, y, z, 1.0F, 1.0F, true), world);
+                world.playSoundEffect(x, y, z, "ambient.cave.cave", 1.0F, 1.0F);
                 int entityCount = 0;
                 boolean firstCreeper = true;
                 for(int i = 0; i < 50; i++) {
@@ -74,13 +79,13 @@ public class MineChessUtils{
                     int randZ = z + rand.nextInt(20) - 10;
                     if(randZ >= z - 2 && randZ <= z + 9) randZ += 12;
                     int randY = y + rand.nextInt(6) - 3;
-                    if(world.isAirBlock(randX, randY, randZ) && world.isAirBlock(randX, randY + 1, randZ)) {
+                    if(world.isAirBlock(new BlockPos(randX, randY, randZ)) && world.isAirBlock(new BlockPos(randX, randY + 1, randZ))) {
                         EntityCreeper creeper = new EntityCreeper(world);
 
                         creeper.setPosition(randX + 0.5D, randY, randZ + 0.5D);
-                        creeper.setTarget(player); // make the creeper already
-                                                   // knowing where the player
-                                                   // is.
+                        creeper.setAttackTarget(player); // make the creeper already
+                        // knowing where the player
+                        // is.
                         if(firstCreeper) creeper.onStruckByLightning(null);
                         firstCreeper = false;
                         world.spawnEntityInWorld(creeper);
@@ -134,7 +139,7 @@ public class MineChessUtils{
     }
 
     public static void sendUnlocalizedMessage(EntityPlayer player, String message, String... replacements){
-        MineChess.packetPipeline.sendTo(new PacketAddChatMessage(message, replacements), (EntityPlayerMP)player);
+        NetworkHandler.sendTo(new PacketAddChatMessage(message, replacements), (EntityPlayerMP)player);
     }
 
 }
