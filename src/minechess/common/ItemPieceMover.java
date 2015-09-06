@@ -116,6 +116,14 @@ public class ItemPieceMover extends Item{
                 return false;
             }
 
+            for(int curX = 0; curX < 8; curX++) {
+                for(int curZ = 0; curZ < 8; curZ++) {
+                    if(world.getBlock(startX + curX, y, startZ + curZ).getBlockHardness(world, startX + curX, y, startZ + curZ) < 0) {
+                        MineChessUtils.sendUnlocalizedMessage(player, "message.error.unbreakableBlocks", EnumChatFormatting.DARK_RED.toString());
+                        return false;
+                    }
+                }
+            }
             generateChessEntities(world, startX, y, startZ, false);
             MineChessUtils.generateChessBoard(world, startX, y, startZ);
             iStack.stackSize--;

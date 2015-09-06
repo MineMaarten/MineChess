@@ -17,6 +17,7 @@ tooltip.noSelectedPiece=-No Piece Selected-
 tooltip.aiInjector=Right click a chess piece of a certain color to turn it into an AI controlled team.
 
 message.error.targetOccupied=[MineChess] You can't generate a chessboard here: There are already pieces at the desired location.
+message.error.unbreakableBlocks=[MineChess] You can't generate a chessboard here: The board would replace unbreakable blocks!
 message.error.computerPiece=[MineChess] This piece is controlled by the computer!
 message.error.notYourPiece=[MineChess] This isn't your piece!
 message.error.pieceCaptured=[MineChess] The selected piece has been captured!
