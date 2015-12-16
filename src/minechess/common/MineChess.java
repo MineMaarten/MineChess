@@ -31,7 +31,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
  */
 
 // TODO increase version
-@Mod(modid = Constants.MOD_ID, name = "MineChess", version = "1.3.8")
+@Mod(modid = Constants.MOD_ID, name = "MineChess", version = "1.4.1")
 public class MineChess{
 
     @SidedProxy(clientSide = "minechess.client.ClientProxyMineChess", serverSide = "minechess.common.CommonProxyMineChess")

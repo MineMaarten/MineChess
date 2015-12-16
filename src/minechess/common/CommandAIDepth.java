@@ -16,7 +16,7 @@ import net.minecraft.command.WrongUsageException;
 public class CommandAIDepth extends CommandBase{
 
     @Override
-    public String getName(){
+    public String getCommandName(){
         return "aidepth";
     }
 
@@ -31,7 +31,7 @@ public class CommandAIDepth extends CommandBase{
     }
 
     @Override
-    public void execute(ICommandSender icommandsender, String[] astring) throws CommandException{
+    public void processCommand(ICommandSender icommandsender, String[] astring) throws CommandException{
         if(astring.length > 0) {
             int newDepth = parseInt(astring[0], 1);
             Chess.maxDepthSetting = newDepth;

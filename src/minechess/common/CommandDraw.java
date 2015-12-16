@@ -21,7 +21,7 @@ import net.minecraft.util.EnumChatFormatting;
 public class CommandDraw extends CommandBase{
 
     @Override
-    public String getName(){
+    public String getCommandName(){
         return "draw";
     }
 
@@ -36,7 +36,7 @@ public class CommandDraw extends CommandBase{
     }
 
     @Override
-    public void execute(ICommandSender icommandsender, String[] astring) throws CommandException{
+    public void processCommand(ICommandSender icommandsender, String[] astring) throws CommandException{
         BlockPos coords = icommandsender.getPosition();
         AxisAlignedBB aabb = new AxisAlignedBB(coords.getX() - 2, coords.getY() - 2, coords.getZ() - 2, coords.getX() + 2, coords.getY() + 2, coords.getZ());
         List<EntityBaseChessPiece> pieces = icommandsender.getEntityWorld().getEntitiesWithinAABB(EntityBaseChessPiece.class, aabb);
@@ -47,15 +47,15 @@ public class CommandDraw extends CommandBase{
                     EntityKing king = (EntityKing)piece;
                     if(king.checkForDraw(false)) {
                         king.setDeathTimer(true);
-                        king.sendChatToNearbyPlayers(null, "message.broadcast.drawRequestAllowed", EnumChatFormatting.GOLD.toString(), icommandsender.getName());
+                        king.sendChatToNearbyPlayers(null, "message.broadcast.drawRequestAllowed", EnumChatFormatting.GOLD.toString(), icommandsender.getCommandSenderName());
                     } else {
-                        king.sendChatToNearbyPlayers(null, "message.broadcast.drawRequestRejected", EnumChatFormatting.GOLD.toString(), icommandsender.getName());
+                        king.sendChatToNearbyPlayers(null, "message.broadcast.drawRequestRejected", EnumChatFormatting.GOLD.toString(), icommandsender.getCommandSenderName());
                     }
                     return;
                 }
             }
         } else {
-            EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(icommandsender.getName());
+            EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(icommandsender.getCommandSenderName());
             if(player != null) {
                 MineChessUtils.sendUnlocalizedMessage(player, "message.error.noChessboardsNearby", EnumChatFormatting.RED.toString());
             }

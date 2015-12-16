@@ -20,7 +20,7 @@ import net.minecraft.world.WorldServer;
 public class CommandKillPiece extends CommandBase{
 
     @Override
-    public String getName(){
+    public String getCommandName(){
         return "killpiece";
     }
 
@@ -35,7 +35,7 @@ public class CommandKillPiece extends CommandBase{
     }
 
     @Override
-    public void execute(ICommandSender icommandsender, String[] astring) throws CommandException{
+    public void processCommand(ICommandSender icommandsender, String[] astring) throws CommandException{
         if(astring.length > 3 && (astring[3].equals("white") || astring[3].equals("black"))) {
             int x = parseInt(astring[0]);
             int y = parseInt(astring[1]);

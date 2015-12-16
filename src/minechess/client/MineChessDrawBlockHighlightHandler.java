@@ -4,8 +4,6 @@ import minechess.common.EntityBaseChessPiece;
 import minechess.common.ItemPieceMover;
 import minechess.common.MineChess;
 import minechess.common.MineChessUtils;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -134,13 +132,12 @@ public class MineChessDrawBlockHighlightHandler{
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(0F, 1F, 0F, pulseTransparency);
 
-        WorldRenderer tessellator = Tessellator.getInstance().getWorldRenderer();
-        tessellator.startDrawingQuads();
-        tessellator.addVertex(x + 0F, y + height, zLevel);
-        tessellator.addVertex(x + width, y + height, zLevel);
-        tessellator.addVertex(x + width, y + 0F, zLevel);
-        tessellator.addVertex(x + 0F, y + 0F, zLevel);
-        Tessellator.getInstance().draw();
+        TessWrapper.startDrawingQuads();
+        TessWrapper.addVertex(x + 0F, y + height, zLevel);
+        TessWrapper.addVertex(x + width, y + height, zLevel);
+        TessWrapper.addVertex(x + width, y + 0F, zLevel);
+        TessWrapper.addVertex(x + 0F, y + 0F, zLevel);
+        TessWrapper.draw();
 
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glEnable(GL11.GL_TEXTURE_2D);

@@ -1,4 +1,6 @@
 ideeen.docx
+~$ideeen.docx
+~WRL1161.tmp
 drone.txt
 unused resources
 /bin
@@ -19,5 +21,9 @@ environment.properties
 .project
 /build
 /eclipse
+/gradle
 .gradle/
 .settings/
+/sounds
+gradle.properties
+gradlew.bat
